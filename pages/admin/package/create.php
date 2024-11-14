@@ -1,0 +1,175 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['admin_id'])) {
+    error_log("User not logged in, redirecting to login page");
+
+    header("Location: ../auth/admin-login.php");
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>PAP's Fitness Gym - Add Packages</title>
+  </head>
+
+  <body style="background-color: black; position: relative;">
+    <header class="pt-16 pb-24 flex items-center px-52 justify-between">
+      <div class="w-24 h-24 overflow-hidden">
+        <img src="../../../public/images/logo.png" alt="Logo" class="w-full h-auto">
+      </div>
+
+      <p class="text-4xl font-bold text-[#fabf3b]">ADD PACKAGES</p>
+
+      <button 
+        class="bg-[#fabf3b] px-5 py-1.5 text-black font-medium rounded-sm"
+        onclick="window.location.href='../../controllers/logoutController.php'"
+      >
+        Logout
+      </button>
+    </header>
+
+    <div class="px-52 w-full">
+      <div class="grid grid-cols-6 gap-x-10">
+        <button 
+          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+          onclick="window.location.href='home.php'"
+        >
+          Home Page
+        </button>
+
+        <button 
+          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+          onclick="window.location.href='auth/login.php'"
+        >
+          Membership Management
+        </button>
+
+        <button 
+          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+          onclick="window.location.href='auth/login.php'"
+        >
+          Manage Equipment
+        </button>
+
+        <button 
+          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+          onclick="window.location.href='package.php'"
+        >
+          Manage Packages
+        </button>
+        
+        <button 
+          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+          onclick="window.location.href='auth/login.php'"
+        >
+          Manage Pricing
+        </button>
+
+        <button 
+          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+          onclick="window.location.href='auth/login.php'"
+        >
+          Manage Billing
+        </button>
+      </div>
+    </div>
+
+    <div class="px-52 w-full flex flex-col items-center py-16">
+      <div class="max-w-xl w-full flex flex-col space-y-8 items-start">
+        <div class="flex justify-end w-full">
+          <button 
+            class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm"
+            onclick="window.location.href='../package.php'"
+          >
+            Back
+          </button>
+        </div>
+
+        <div class="py-10 px-6 bg-[#fabf3b] flex flex-col items-center space-y-6 w-full">
+          <p class="text-3xl text-black font-bold">Package</p>
+
+          <form action="../../../controllers/packageController.php" method="POST" class="space-y-6 flex flex-col w-full">
+            <input 
+              name="name"
+              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+              placeholder="Package Name"
+            />
+
+            <textarea 
+              name="description"
+              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+              placeholder="Description"
+            ></textarea>
+
+            <div class="flex items-center space-x-4 w-full">
+              <select 
+                id="select-type"
+                class="px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white w-32"
+              >
+                <option value="daily" selected>Daily</option>
+                <option value="monthly">Monthly</option>
+                <option value="hourly">Hourly</option>
+              </select>
+
+              <div id="input-container" class="w-full">
+                <input 
+                  name="daily_rate"
+                  id="input-field"
+                  class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+                  placeholder="Daily Rate"
+                />
+              </div>
+            </div>
+
+            <button 
+              class="bg-black px-5 py-3 text-black text-base font-medium rounded-lg w-full text-white"
+              name="create"
+            >
+              Create
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  const selectType = document.getElementById('select-type');
+  const inputContainer = document.getElementById('input-container');
+
+  function updateInputField() {
+    const selectedValue = selectType.value;
+    let placeholderText = '';
+    let inputName = '';
+
+    if (selectedValue === 'daily') {
+      placeholderText = 'Daily Rate';
+      inputName = 'daily_rate';
+    } else if (selectedValue === 'monthly') {
+      placeholderText = 'Monthly Rate';
+      inputName = 'monthly_rate';
+    } else if (selectedValue === 'hourly') {
+      placeholderText = 'Hourly Rate';
+      inputName = 'hourly_rate';
+    }
+
+    const newInput = document.createElement('input');
+    newInput.className = 'w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-yellow-300';
+    newInput.placeholder = placeholderText;
+    newInput.name = inputName;
+
+    inputContainer.innerHTML = '';
+    inputContainer.appendChild(newInput);
+  }
+
+  updateInputField();
+
+  selectType.addEventListener('change', updateInputField);
+</script>
