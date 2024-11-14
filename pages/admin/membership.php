@@ -65,7 +65,7 @@ if ($result->num_rows > 0) {
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
+          onclick="window.location.href='equipment.php'"
         >
           Manage Equipment
         </button>
