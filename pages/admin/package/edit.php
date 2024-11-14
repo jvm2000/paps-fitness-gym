@@ -58,7 +58,7 @@
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
+          onclick="window.location.href='membership.php'"
         >
           Membership Management
         </button>
@@ -72,16 +72,16 @@
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
+          onclick="window.location.href='package.php'"
         >
-          Manage Pricing
+          Manage Packages
         </button>
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='package.php'"
+          onclick="window.location.href='auth/login.php'"
         >
-          Manage Packages
+          Manage Pricing
         </button>
 
         <button 
@@ -123,9 +123,7 @@
               name="description"
               class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
               placeholder="Description"
-            >
-              <?php echo $description ?>
-            </textarea>
+            ><?php echo $description ?></textarea>
 
             <div class="flex items-center space-x-4 w-full">
               <select 
@@ -138,14 +136,21 @@
               </select>
 
               <div id="input-container" class="w-full">
+                <?php
+                  $rate = '';
+                  if (!empty($daily_rate)) {
+                      $rate = $daily_rate;
+                  } elseif (!empty($monthly_rate)) {
+                      $rate = $monthly_rate;
+                  } elseif (!empty($hourly_rate)) {
+                      $rate = $hourly_rate;
+                  }
+                ?>
                 <input 
                   class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
                   placeholder="Daily Rate"
-                  value="
-                    <?php echo $daily_rate ? $daily_rate : '' ?> 
-                    <?php echo $monthly_rate ? $monthly_rate : '' ?> 
-                    <?php echo $hourly_rate ? $hourly_rate : '' ?>
-                  "
+                  disabled
+                  value="<?php echo $rate?>"
                 />
               </div>
             </div>

@@ -45,23 +45,16 @@ if (!isset($_SESSION['admin_id'])) {
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
+          onclick="window.location.href='membership.php'"
         >
           Membership Management
         </button>
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
+          onclick="window.location.href='equipment.php'"
         >
           Manage Equipment
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Manage Pricing
         </button>
 
         <button 
@@ -69,6 +62,13 @@ if (!isset($_SESSION['admin_id'])) {
           onclick="window.location.href='package.php'"
         >
           Manage Packages
+        </button>
+
+        <button 
+          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+          onclick="window.location.href='auth/login.php'"
+        >
+          Manage Pricing
         </button>
 
         <button 
