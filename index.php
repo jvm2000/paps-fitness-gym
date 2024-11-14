@@ -14,7 +14,10 @@
       </div>
 
       <div class="flex items-center space-x-6">
-        <button class="bg-[#fabf3b] px-5 py-1.5 text-black font-medium rounded-lg">
+        <button 
+          class="bg-[#fabf3b] px-5 py-1.5 text-black font-medium rounded-lg"
+          onclick="window.location.href='pages/auth/login.php'"
+        >
           Login
         </button>
 
