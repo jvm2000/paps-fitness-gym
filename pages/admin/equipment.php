@@ -125,8 +125,8 @@ if ($result->num_rows > 0) {
               <?php foreach ($equipments as $equipment): ?>
                 <tr>
                   <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $equipment['equipment_id'] ?></td>
-                  <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black">
-                    <img src="<?php echo $equipment['image'] ?>" alt="">
+                  <td class="text-base text-left text-black indent-4 border-b border-r border-black">
+                    <img src="<?php echo '../' . $equipment['image']; ?>" alt="" class="w-full h-24 object-cover">
                   </td>
                   <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $equipment['name'] ?></td>
                   <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $equipment['type'] ?></td>
@@ -140,8 +140,8 @@ if ($result->num_rows > 0) {
                       <a href="membership/edit.php?membership_id=<?php echo $membership['membership_id']?>">Edit</a> 
                       <span>-</span>
 
-                      <form action='../../controllers/membershipController.php' method='POST'>
-                        <input type="hidden" name="membership_id" value="<?php echo $membership['membership_id']?>">
+                      <form action='../../controllers/equipmentController.php' method='POST'>
+                        <input type="hidden" name="equipment_id" value="<?php echo $equipment['equipment_id']?>">
                         <button type="submit" name="delete">Delete</button> 
                       </form>
                     </p>
