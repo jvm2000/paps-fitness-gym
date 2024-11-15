@@ -98,9 +98,9 @@ if ($result->num_rows > 0) {
         <?php foreach ($equipments as $equipment): ?>
           <div class="w-full bg-[#fabf3b] flex flex-col pb-2">
             <img 
-              src="<?php $equipment['image'] ?>" 
+              src="<?php echo '../' . $equipment['image']; ?>"
               alt="<?php echo $equipment['name'] ?>"
-              class="w-full h-24 object-cover"
+              class="w-full h-36 object-cover"
             />
 
             <p class="text-base font-semibold indent-6"><?php echo $equipment['name'] ?></p>
