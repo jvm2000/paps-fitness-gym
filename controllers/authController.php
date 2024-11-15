@@ -84,9 +84,7 @@
           exit();
       }
 
-      $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-      $sql = "INSERT INTO users (firstname, lastname, email, password, phone) VALUES ('$firstname', '$lastname', '$email', '$hashedPassword', '$phone')";
+      $sql = "INSERT INTO users (firstname, lastname, email, password, phone) VALUES ('$firstname', '$lastname', '$email', '$password', '$phone')";
 
       if($conn->query($sql)){
         header("Location: ../pages/auth/login.php?message=User Registered Successfully");
