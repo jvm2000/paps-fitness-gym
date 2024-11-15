@@ -100,7 +100,7 @@ if ($result->num_rows > 0) {
 
       <p class="text-3xl font-bold text-[#fabf3b]">Affordable Membership</p>
 
-      <div class="max-w-3xl w-full grid grid-cols-2 gap-x-12">
+      <div class="max-w-7xl w-full grid grid-cols-3 gap-x-12 gap-y-6">
         <?php foreach ($packages as $package): ?>
           <div class="bg-[#fabf3b] w-full px-4 flex flex-col items-center pt-6 pb-3 space-y-6">
             <p class="text-3xl font-bold"><?php echo $package['name'] ?></p>

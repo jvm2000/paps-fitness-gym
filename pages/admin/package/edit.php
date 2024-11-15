@@ -109,9 +109,6 @@
 
           <form action="../../../controllers/packageController.php" method="POST" class="space-y-6 flex flex-col w-full">
             <input type="hidden" name="package_id" value="<?php echo $package_id ?>">
-            <input type="hidden" name="daily_rate" value="<?php echo $daily_rate ?>">
-            <input type="hidden" name="monthly_rate" value="<?php echo $monthly_rate ?>">
-            <input type="hidden" name="hourly_rate" value="<?php echo $hourly_rate ?>">
             <input 
               name="name"
               class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
@@ -128,29 +125,29 @@
             <div class="flex items-center space-x-4 w-full">
               <select 
                 id="select-type"
-                class="px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white w-32 pointer-events-none opacity-90"
+                class="px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white w-32"
               >
                 <option value="daily" <?php echo !empty($daily_rate) ? 'selected' : ''; ?>>Daily</option>
                 <option value="monthly" <?php echo !empty($monthly_rate) ? 'selected' : ''; ?>>Monthly</option>
                 <option value="hourly" <?php echo !empty($hourly_rate) ? 'selected' : ''; ?>>Hourly</option>
               </select>
 
+              <?php
+                $rate = '';
+                if (!empty($daily_rate)) {
+                    $rate = $daily_rate;
+                } elseif (!empty($monthly_rate)) {
+                    $rate = $monthly_rate;
+                } elseif (!empty($hourly_rate)) {
+                    $rate = $hourly_rate;
+                }
+              ?>
               <div id="input-container" class="w-full">
-                <?php
-                  $rate = '';
-                  if (!empty($daily_rate)) {
-                      $rate = $daily_rate;
-                  } elseif (!empty($monthly_rate)) {
-                      $rate = $monthly_rate;
-                  } elseif (!empty($hourly_rate)) {
-                      $rate = $hourly_rate;
-                  }
-                ?>
                 <input 
                   class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
                   placeholder="Daily Rate"
-                  disabled
-                  value="<?php echo $rate?>"
+                  name="daily_rate"
+                  id="input-field"
                 />
               </div>
             </div>
@@ -167,3 +164,38 @@
     </div>
   </body>
 </html>
+
+<script>
+  const selectType = document.getElementById('select-type');
+  const inputContainer = document.getElementById('input-container');
+
+  function updateInputField() {
+    const selectedValue = selectType.value;
+    let placeholderText = '';
+    let inputName = '';
+
+    if (selectedValue === 'daily') {
+      placeholderText = 'Daily Rate';
+      inputName = 'daily_rate';
+    } else if (selectedValue === 'monthly') {
+      placeholderText = 'Monthly Rate';
+      inputName = 'monthly_rate';
+    } else if (selectedValue === 'hourly') {
+      placeholderText = 'Hourly Rate';
+      inputName = 'hourly_rate';
+    }
+
+    const newInput = document.createElement('input');
+    newInput.className = 'w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-yellow-300';
+    newInput.placeholder = placeholderText;
+    newInput.name = inputName;
+    newInput.value = <?php echo $rate ?>;
+
+    inputContainer.innerHTML = '';
+    inputContainer.appendChild(newInput);
+  }
+
+  updateInputField();
+
+  selectType.addEventListener('change', updateInputField);
+</script>
