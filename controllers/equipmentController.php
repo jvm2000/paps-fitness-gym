@@ -43,19 +43,44 @@
     }
 
     elseif(isset($_POST['update'])){
-      $package_id = $_POST['package_id'];
+      $equipment_id = $_POST['equipment_id'];
       $name = $_POST['name'];
-      $description = $_POST['description'];
-      $daily_rate = isset($_POST['daily_rate']) && $_POST['daily_rate'] !== '' ? $_POST['daily_rate'] : null;
-      $monthly_rate = isset($_POST['monthly_rate']) && $_POST['monthly_rate'] !== '' ? $_POST['monthly_rate'] : null;
-      $hourly_rate = isset($_POST['hourly_rate']) && $_POST['hourly_rate'] !== '' ? $_POST['hourly_rate'] : null;
+      $type = $_POST['type'];
+      $quantity = $_POST['quantity'];
+      $equipment_condition = $_POST['equipment_condition'];
+      $last_maintenance = $_POST['last_maintenance'];
+      $due_maintenance = $_POST['due_maintenance'];
+      $status = $_POST['status'];
+      $image = $_POST['image'];
 
-      $sql = "UPDATE packages SET name='$name', description='$description', daily_rate='$daily_rate', monthly_rate='$monthly_rate', hourly_rate='$hourly_rate' WHERE package_id = $package_id";
+      if (empty($name) || empty($type) || empty($quantity) || empty($equipment_condition) || empty($last_maintenance) || empty($due_maintenance) || empty($status)) {
+        header("Location: ../pages/admin/equipment/create.php?message=Please fill in all fields.&type=error");
+        exit();
+      }
+
+      if (!empty($_FILES['image']['tmp_name'])) {
+        $tmp_name = $_FILES['image']['tmp_name'];
+        $filename = basename($_FILES['image']['name']);
+        $upload_dir = '../public/equipments/';
+        $image = $upload_dir . $filename;
+
+        if (!is_dir($upload_dir)) {
+          mkdir($upload_dir, 0777, true);
+        }
+
+        if (!move_uploaded_file($tmp_name, $image)) {
+          header("Location: ../pages/admin/equipment.php?message=Failed to upload image.&type=error");
+          exit();
+        }
+      }
+
+      $sql = "UPDATE equipments SET name='$name', type='$type', quantity='$quantity', equipment_condition='$equipment_condition', last_maintenance='$last_maintenance', due_maintenance='$due_maintenance', status='$status', image='$image'  WHERE equipment_id = $equipment_id";
 
       if($conn->query($sql)){
-        header("Location: ../pages/admin/package.php?message=Package Updated Successfully");
+        header("Location: ../pages/admin/equipment.php?message=Package Updated Successfully");
+      } else {
+        echo "ERROR! Created unsuccessfully";
       }
-      echo "ERROR! Created unsuccessfully";
     }
 
     elseif(isset($_POST['delete'])){

@@ -126,7 +126,7 @@ if ($result->num_rows > 0) {
                 <tr>
                   <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $equipment['equipment_id'] ?></td>
                   <td class="text-base text-left text-black indent-4 border-b border-r border-black">
-                    <img src="<?php echo '../' . $equipment['image']; ?>" alt="" class="w-full h-24 object-cover">
+                    <img src="<?php echo '../' . $equipment['image']; ?>" class="w-full h-24 object-cover">
                   </td>
                   <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $equipment['name'] ?></td>
                   <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $equipment['type'] ?></td>
@@ -137,7 +137,7 @@ if ($result->num_rows > 0) {
                   <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $equipment['status'] ?></td>
                   <td class="py-4 text-base text-center border-b border-black">
                     <p>
-                      <a href="membership/edit.php?membership_id=<?php echo $membership['membership_id']?>">Edit</a> 
+                      <a href="equipment/edit.php?equipment_id=<?php echo $equipment['equipment_id']?>">Edit</a> 
                       <span>-</span>
 
                       <form action='../../controllers/equipmentController.php' method='POST'>
