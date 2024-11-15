@@ -51,14 +51,14 @@ if ($result->num_rows > 0) {
       <div class="grid grid-cols-6 gap-x-10">
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
+          onclick="window.location.href='home.php'"
         >
           Home Page
         </button>
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
+          onclick="window.location.href='profile.php'"
         >
           Profile
         </button>

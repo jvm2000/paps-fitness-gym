@@ -1,25 +1,25 @@
 <?php
-  session_start();
-  include "../../../config/connect.php";
+session_start();
+include "../../../config/connect.php";
 
-  if (!isset($_SESSION['admin_id'])) {
-    error_log("User not logged in, redirecting to login page");
+if (!isset($_SESSION['admin_id'])) {
+  error_log("User not logged in, redirecting to login page");
 
-    header("Location: ../auth/admin-login.php");
-    exit();
-  }
+  header("Location: ../auth/admin-login.php");
+  exit();
+}
 
-  $package_id = $_GET['package_id'];
+$package_id = $_GET['package_id'];
 
-  $sql = "SELECT * FROM packages WHERE package_id = $package_id";
-  $packages = mysqli_query($conn,$sql);
-  $package = mysqli_fetch_assoc($packages);
+$sql = "SELECT * FROM packages WHERE package_id = $package_id";
+$packages = mysqli_query($conn,$sql);
+$package = mysqli_fetch_assoc($packages);
 
-  $name = $package['name'];
-  $description = $package['description'];
-  $daily_rate = $package['daily_rate'];
-  $monthly_rate = $package['monthly_rate'];
-  $hourly_rate = $package['hourly_rate'];
+$name = $package['name'];
+$description = $package['description'];
+$daily_rate = $package['daily_rate'];
+$monthly_rate = $package['monthly_rate'];
+$hourly_rate = $package['hourly_rate'];
 ?>
 
 <!DOCTYPE html>

@@ -94,18 +94,19 @@
     }
 
     elseif(isset($_POST['update'])){
-      $evCode = $_POST['evCode'];
-      $cvName = $_POST['cvName'];
-      $cvDate = $_POST['cvDate'];
-      $cvVenue = $_POST['cvVenue'];
-      $evRFee = $_POST['evRFee'];
+      $user_id  = $_POST['user_id'];
+      $firstname = $_POST['firstname'];
+      $lastname = $_POST['lastname'];
+      $email = $_POST['email'];
+      $phone = $_POST['phone'];
 
-      $sql = "UPDATE events SET cvName='$cvName', cvDate='$cvDate', cvVenue='$cvVenue', evRFee='$evRFee' WHERE evCode = $evCode";
+      $sql = "UPDATE users SET firstname='$firstname', lastname='$lastname', email='$email', phone='$phone' WHERE user_id = $user_id";
 
       if($conn->query($sql)){
-        Header("Location:../pages/events_management.php");
+        header("Location: ../pages/user/profile.php?message=User Updateds Successfully");
+      } else {
+        echo "ERROR! Created unsuccessfully";
       }
-      echo "ERROR! Created unsuccessfully";
     }
 
     elseif(isset($_POST['delete'])){
