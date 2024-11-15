@@ -67,7 +67,7 @@ if ($result->num_rows > 0) {
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
+          onclick="window.location.href='equipment.php'"
         >
           Equipment
         </button>
@@ -101,15 +101,21 @@ if ($result->num_rows > 0) {
       <p class="text-3xl font-bold text-[#fabf3b]">Affordable Membership</p>
 
       <div class="max-w-7xl w-full grid grid-cols-3 gap-x-12 gap-y-6">
-        <?php foreach ($packages as $package): ?>
-          <div class="bg-[#fabf3b] w-full px-4 flex flex-col items-center pt-6 pb-3 space-y-6">
-            <p class="text-3xl font-bold"><?php echo $package['name'] ?></p>
+        <?php foreach ($packages as $index => $package): ?>
+          <div class="bg-[#fabf3b] w-full px-4 flex flex-col items-center pt-6 pb-3 space-y-6 relative">
+            <p class="text-3xl font-bold z-[1] w-full bg-[#fabf3b] text-center"><?php echo $package['name'] ?></p>
 
             <p class="text-base font-medium text-center px-6 h-7">
               <?php echo $package['description'] ?>
             </p>
 
-            <form action="../../controllers/membershipController.php" method="POST" class="space-y-6 flex flex-col items-center px-4">
+            <form 
+              action="../../controllers/membershipController.php" 
+              method="POST" class="space-y-6 flex flex-col items-center px-4"
+              data-daily-rate="<?php echo !empty($package['daily_rate']) ? $package['daily_rate'] : ''; ?>"
+              data-monthly-rate="<?php echo !empty($package['monthly_rate']) ? $package['monthly_rate'] : ''; ?>"
+              data-hourly-rate="<?php echo !empty($package['hourly_rate']) ? $package['hourly_rate'] : ''; ?>"
+            >
               <input type="hidden" name="user_id" value="<?php echo $userID ?>">
               <input type="hidden" name="package_id" value="<?php echo $package['package_id'] ?>">
               <?php
@@ -126,23 +132,28 @@ if ($result->num_rows > 0) {
               <input type="hidden" name="status" value="inactive">
               <input type="hidden" name="payment_status" value="pending">
 
+              <?php 
+                $startId = "start-date-$index"; 
+                $expirationId = "expiration-date-$index"; 
+              ?>
+
               <div class="flex items-center space-x-4">
-                <div class="space-y-1.5">
-                  <label for="start-date" class="text-xs">Start Date</label>
+                <div class="space-y-1.5 absolute top-0 left-0 z-[0] invisible">
+                  <label for="<?php echo $startId; ?>" class="text-xs">Start Date</label>
 
                   <input 
-                    id="start-date"
+                    id="<?php echo $startId; ?>"
                     type="date"
                     name="start_date"
-                    class="w-full px-4 py-2.5 ring-[1px] ring-black text-xs rounded-md text-black bg-[#fabf3b]"
+                    class="w-full px-4 py-2.5 ring-[1px] ring-black text-xs rounded-md text-black bg-[#fabf3b] event-pointers-none"
                   />
                 </div>
 
-                <div class="space-y-1.5">
-                  <label for="expiration_date" class="text-xs">Expiration Date</label>
+                <div class="space-y-1.5 absolute top-0 right-0 z-[0] invisible">
+                  <label for="<?php echo $expirationId; ?>" class="text-xs">Expiration Date</label>
 
                   <input 
-                    id="expiration_date"
+                    id="<?php echo $expirationId; ?>"
                     type="date"
                     name="expiration_date"
                     class="w-full px-4 py-2.5 ring-[1px] ring-black text-xs rounded-md text-black bg-[#fabf3b]"
@@ -164,3 +175,40 @@ if ($result->num_rows > 0) {
     </div>
   </body>
 </html>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const packageElements = document.querySelectorAll('form');
+    
+    packageElements.forEach((form, index) => {
+      const startDateInput = document.getElementById(`start-date-${index}`);
+      const expirationDateInput = document.getElementById(`expiration-date-${index}`);
+      
+      let membershipType = '';
+      if (form.dataset.dailyRate) {
+        membershipType = 'daily';
+      } else if (form.dataset.monthlyRate) {
+        membershipType = 'monthly';
+      } else if (form.dataset.hourlyRate) {
+        membershipType = 'hourly';
+      }
+
+      function formatDate(date) {
+        return date.toISOString().split('T')[0];
+      }
+
+      const today = new Date();
+      startDateInput.value = formatDate(today);
+
+      let expirationDate = new Date(today);
+
+      if (membershipType === "daily") {
+        expirationDate.setDate(expirationDate.getDate() + 1);
+      } else if (membershipType === "monthly") {
+        expirationDate.setDate(expirationDate.getDate() + 30);
+      }
+
+      expirationDateInput.value = formatDate(expirationDate);
+    });
+  });
+</script>
