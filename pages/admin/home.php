@@ -35,7 +35,7 @@ if (!isset($_SESSION['admin_id'])) {
     </header>
 
     <div class="px-52 w-full">
-      <div class="grid grid-cols-6 gap-x-10">
+      <div class="grid grid-cols-7 gap-x-10">
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
           onclick="window.location.href='home.php'"
@@ -66,14 +66,21 @@ if (!isset($_SESSION['admin_id'])) {
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
+          onclick="window.location.href='pricing.php'"
         >
           Manage Pricing
         </button>
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
+          onclick="window.location.href='trainers.php'"
+        >
+          Manage Trainers
+        </button>
+
+        <button 
+          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+          onclick="window.location.href='billing.php'"
         >
           Manage Billing
         </button>
