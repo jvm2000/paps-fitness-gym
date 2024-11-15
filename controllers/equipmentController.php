@@ -51,30 +51,13 @@
       $last_maintenance = $_POST['last_maintenance'];
       $due_maintenance = $_POST['due_maintenance'];
       $status = $_POST['status'];
-      $image = $_POST['image'];
 
       if (empty($name) || empty($type) || empty($quantity) || empty($equipment_condition) || empty($last_maintenance) || empty($due_maintenance) || empty($status)) {
         header("Location: ../pages/admin/equipment/create.php?message=Please fill in all fields.&type=error");
         exit();
       }
 
-      if (!empty($_FILES['image']['tmp_name'])) {
-        $tmp_name = $_FILES['image']['tmp_name'];
-        $filename = basename($_FILES['image']['name']);
-        $upload_dir = '../public/equipments/';
-        $image = $upload_dir . $filename;
-
-        if (!is_dir($upload_dir)) {
-          mkdir($upload_dir, 0777, true);
-        }
-
-        if (!move_uploaded_file($tmp_name, $image)) {
-          header("Location: ../pages/admin/equipment.php?message=Failed to upload image.&type=error");
-          exit();
-        }
-      }
-
-      $sql = "UPDATE equipments SET name='$name', type='$type', quantity='$quantity', equipment_condition='$equipment_condition', last_maintenance='$last_maintenance', due_maintenance='$due_maintenance', status='$status', image='$image'  WHERE equipment_id = $equipment_id";
+      $sql = "UPDATE equipments SET name='$name', type='$type', quantity='$quantity', equipment_condition='$equipment_condition', last_maintenance='$last_maintenance', due_maintenance='$due_maintenance', status='$status'  WHERE equipment_id = $equipment_id";
 
       if($conn->query($sql)){
         header("Location: ../pages/admin/equipment.php?message=Package Updated Successfully");

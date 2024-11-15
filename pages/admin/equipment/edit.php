@@ -175,14 +175,11 @@ $image = $equipment['image'];
 
             <div 
               class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white min-h-24 max-h-full flex items-center justify-center" 
-              id="uploadButton"
             >
-              <p>Upload Image</p>
+              <p>Image</p>
               <img 
-                id="previewImage" 
                 src="<?php echo '../../' . $image; ?>"
                 alt="Image Preview" class="w-full object-cover h-64" />
-              <input type="file" id="fileInput" name="image" style="display: none;" value="<?php echo $image ?>" />
             </div>
 
             <button 
@@ -197,24 +194,3 @@ $image = $equipment['image'];
     </div>
   </body>
 </html>
-
-<script>
-  document.getElementById('uploadButton').addEventListener('click', function () {
-    document.getElementById('fileInput').click();
-  });
-
-  document.getElementById('fileInput').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const previewImage = document.getElementById('previewImage');
-        previewImage.src = e.target.result;
-        previewImage.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert('Please select an image file.');
-    }
-  });
-</script>
