@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['admin_id'])) {
-    error_log("User not logged in, redirecting to login page");
+if (!isset($_SESSION['user_id'])) {
+  error_log("User not logged in, redirecting to login page");
 
-    header("Location: ../auth/admin-login.php");
-    exit();
+  header("Location: ../auth/login.php");
+  exit();
 }
 ?>
 
@@ -15,16 +15,16 @@ if (!isset($_SESSION['admin_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>PAP's Fitness Gym - Admin Home</title>
+    <title><?php echo $title; ?></title>
   </head>
 
   <body style="background-color: black; position: relative;">
-    <header class="pt-16 pb-24 flex items-center px-52 justify-between">
+  <header class="pt-16 pb-24 flex items-center px-52 justify-between">
       <div class="w-24 h-24 overflow-hidden">
         <img src="../../public/images/logo.png" alt="Logo" class="w-full h-auto">
       </div>
 
-      <p class="text-4xl font-bold text-[#fabf3b]">ADMIN DASHBOARD</p>
+      <p class="text-4xl font-bold text-[#fabf3b] uppercase"><?php echo $pageHeader; ?></p>
 
       <button 
         class="bg-[#fabf3b] px-5 py-1.5 text-black font-medium rounded-sm"
@@ -45,39 +45,43 @@ if (!isset($_SESSION['admin_id'])) {
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='membership.php'"
+          onclick="window.location.href='profile.php'"
         >
-          Membership Management
+          Profile
         </button>
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
           onclick="window.location.href='equipment.php'"
         >
-          Manage Equipment
+          Equipment
         </button>
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='package.php'"
+          onclick="window.location.href='membership.php'"
         >
-          Manage Packages
+          Membership
         </button>
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='trainers.php'"
+          onclick="window.location.href='schedule.php'"
         >
-          Manage Trainers
+          Class Schedule
         </button>
 
         <button 
           class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
           onclick="window.location.href='billing.php'"
         >
-          Manage Billing
+          Billing History
         </button>
       </div>
+    </div>
+
+    <div class="px-52 w-full flex flex-col items-center py-16">
+      <?php include_once($childView); ?>
     </div>
   </body>
 </html>

@@ -109,66 +109,11 @@ if ($result->num_rows > 0) {
               <?php echo $package['description'] ?>
             </p>
 
-            <form 
-              action="../../controllers/membershipController.php" 
-              method="POST" class="space-y-6 flex flex-col items-center px-4"
-              data-daily-rate="<?php echo !empty($package['daily_rate']) ? $package['daily_rate'] : ''; ?>"
-              data-monthly-rate="<?php echo !empty($package['monthly_rate']) ? $package['monthly_rate'] : ''; ?>"
-              data-hourly-rate="<?php echo !empty($package['hourly_rate']) ? $package['hourly_rate'] : ''; ?>"
+            <button 
+              class="text-yellow-300 bg-black px-10 py-1.5 text-black text-sm font-medium rounded-sm"
             >
-              <input type="hidden" name="user_id" value="<?php echo $userID ?>">
-              <input type="hidden" name="package_id" value="<?php echo $package['package_id'] ?>">
-              <?php
-                $membershipType = '';
-                if (!empty($package['daily_rate'])) {
-                    $membershipType = 'daily';
-                } elseif (!empty($package['monthly_rate'])) {
-                    $membershipType = 'monthly';
-                } elseif (!empty($package['hourly_rate'])) {
-                    $membershipType = 'hourly';
-                }
-              ?>
-              <input type="hidden" name="type" value="<?php echo $membershipType; ?>">
-              <input type="hidden" name="status" value="inactive">
-              <input type="hidden" name="payment_status" value="pending">
-
-              <?php 
-                $startId = "start-date-$index"; 
-                $expirationId = "expiration-date-$index"; 
-              ?>
-
-              <div class="flex items-center space-x-4">
-                <div class="space-y-1.5 absolute top-0 left-0 z-[0] invisible">
-                  <label for="<?php echo $startId; ?>" class="text-xs">Start Date</label>
-
-                  <input 
-                    id="<?php echo $startId; ?>"
-                    type="date"
-                    name="start_date"
-                    class="w-full px-4 py-2.5 ring-[1px] ring-black text-xs rounded-md text-black bg-[#fabf3b] event-pointers-none"
-                  />
-                </div>
-
-                <div class="space-y-1.5 absolute top-0 right-0 z-[0] invisible">
-                  <label for="<?php echo $expirationId; ?>" class="text-xs">Expiration Date</label>
-
-                  <input 
-                    id="<?php echo $expirationId; ?>"
-                    type="date"
-                    name="expiration_date"
-                    class="w-full px-4 py-2.5 ring-[1px] ring-black text-xs rounded-md text-black bg-[#fabf3b]"
-                  />
-                </div>
-              </div>
-
-              <button 
-                class="text-yellow-300 bg-black px-10 py-1.5 text-black text-sm font-medium rounded-sm"
-                name="create"
-                type="submit"
-              >
-                Join Now
-              </button>
-            </form>
+              Join Now
+            </button>
           </div>
         <?php endforeach ?>
       </div>

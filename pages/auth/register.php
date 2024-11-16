@@ -34,6 +34,15 @@
             placeholder="Phone Number"
           />
 
+          <select 
+            name="gender"
+            class="w-full px-4 py-2.5 ring-[1px] ring-white text-base rounded-md bg-[#111826] text-white"
+          >
+            <option value="0" selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+
           <input 
             type="email"
             name="email"

@@ -112,7 +112,8 @@ if ($result->num_rows > 0) {
                 <th class="border-b border-r border-black">Description</th>
                 <th class="border-b border-r border-black">Daily Price</th>
                 <th class="border-b border-r border-black">Monthly Price</th>
-                <th class="border-b border-r border-black">Hourly Rate</th>
+                <th class="border-b border-r border-black">Weekly Price</th>
+                <th class="border-b border-r border-black">Yearly Price</th>
                 <th class="border-b border-black">Actions</th>
               </tr>
             </thead>
@@ -124,7 +125,8 @@ if ($result->num_rows > 0) {
                   <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $package['description'] ?></td>
                   <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['daily_rate']) ? $package['daily_rate'] : 'N/A' ?></td>
                   <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['monthly_rate']) ? $package['monthly_rate'] : 'N/A' ?></td>
-                  <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['hourly_rate']) ? $package['hourly_rate'] : 'N/A' ?></td>
+                  <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['weekly_rate']) ? $package['weekly_rate'] : 'N/A' ?></td>
+                  <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['yearly_rate']) ? $package['yearly_rate'] : 'N/A' ?></td>
                   <td class="py-4 text-base text-center border-b border-black">
                     <p>
                       <a href="package/edit.php?package_id=<?php echo $package['package_id']?>">Edit</a> 

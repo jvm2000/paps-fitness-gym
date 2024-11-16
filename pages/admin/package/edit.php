@@ -19,7 +19,8 @@ $name = $package['name'];
 $description = $package['description'];
 $daily_rate = $package['daily_rate'];
 $monthly_rate = $package['monthly_rate'];
-$hourly_rate = $package['hourly_rate'];
+$weekly_rate = $package['weekly_rate'];
+$yearly_rate = $package['yearly_rate'];
 ?>
 
 <!DOCTYPE html>
@@ -122,35 +123,33 @@ $hourly_rate = $package['hourly_rate'];
               placeholder="Description"
             ><?php echo $description ?></textarea>
 
-            <div class="flex items-center space-x-4 w-full">
-              <select 
-                id="select-type"
-                class="px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white w-32"
-              >
-                <option value="daily" <?php echo !empty($daily_rate) ? 'selected' : ''; ?>>Daily</option>
-                <option value="monthly" <?php echo !empty($monthly_rate) ? 'selected' : ''; ?>>Monthly</option>
-                <option value="hourly" <?php echo !empty($hourly_rate) ? 'selected' : ''; ?>>Hourly</option>
-              </select>
+            <input 
+              name="daily_rate"
+              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+              placeholder="Daily Rate"
+              value="<?php echo $daily_rate ?>"
+            />
 
-              <?php
-                $rate = '';
-                if (!empty($daily_rate)) {
-                    $rate = $daily_rate;
-                } elseif (!empty($monthly_rate)) {
-                    $rate = $monthly_rate;
-                } elseif (!empty($hourly_rate)) {
-                    $rate = $hourly_rate;
-                }
-              ?>
-              <div id="input-container" class="w-full">
-                <input 
-                  class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-                  placeholder="Daily Rate"
-                  name="daily_rate"
-                  id="input-field"
-                />
-              </div>
-            </div>
+            <input 
+              name="monthly_rate"
+              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+              placeholder="Monthly Rate"
+              value="<?php echo $monthly_rate ?>"
+            />
+
+            <input 
+              name="weekly_rate"
+              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+              placeholder="Weekly Rate"
+              value="<?php echo $weekly_rate ?>"
+            />
+
+            <input 
+              name="yearly_rate"
+              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+              placeholder="Yearly Rate"
+              value="<?php echo $yearly_rate ?>"
+            />
 
             <button 
               class="bg-black px-5 py-3 text-black text-base font-medium rounded-lg w-full text-white"

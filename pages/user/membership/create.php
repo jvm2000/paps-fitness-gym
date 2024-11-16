@@ -34,52 +34,6 @@ if (!isset($_SESSION['admin_id'])) {
       </button>
     </header>
 
-    <div class="px-52 w-full">
-      <div class="grid grid-cols-6 gap-x-10">
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='home.php'"
-        >
-          Home Page
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Membership Management
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Manage Equipment
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='package.php'"
-        >
-          Manage Packages
-        </button>
-        
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Manage Pricing
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Manage Billing
-        </button>
-      </div>
-    </div>
-
     <div class="px-52 w-full flex flex-col items-center py-16">
       <div class="max-w-xl w-full flex flex-col space-y-8 items-start">
         <div class="flex justify-end w-full">

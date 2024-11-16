@@ -78,13 +78,14 @@
       $email = $_POST['email'];
       $password = $_POST['password'];
       $phone = $_POST['phone'];
+      $gender = $_POST['gender'];
 
-      if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($phone)) {
+      if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($phone) || empty($gender)) {
           header("Location: login.php?message=Please fill in all fields.&type=error");
           exit();
       }
 
-      $sql = "INSERT INTO users (firstname, lastname, email, password, phone) VALUES ('$firstname', '$lastname', '$email', '$password', '$phone')";
+      $sql = "INSERT INTO users (firstname, lastname, email, password, phone, gender) VALUES ('$firstname', '$lastname', '$email', '$password', '$phone', '$gender')";
 
       if($conn->query($sql)){
         header("Location: ../pages/auth/login.php?message=User Registered Successfully");
@@ -99,8 +100,9 @@
       $lastname = $_POST['lastname'];
       $email = $_POST['email'];
       $phone = $_POST['phone'];
+      $gender = $_POST['gender'];
 
-      $sql = "UPDATE users SET firstname='$firstname', lastname='$lastname', email='$email', phone='$phone' WHERE user_id = $user_id";
+      $sql = "UPDATE users SET firstname='$firstname', lastname='$lastname', email='$email', phone='$phone', gender='$gender' WHERE user_id = $user_id";
 
       if($conn->query($sql)){
         header("Location: ../pages/user/profile.php?message=User Updateds Successfully");
