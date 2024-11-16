@@ -1,13 +1,11 @@
 <?php
-session_start();
 include "../../config/connect.php";
 
-if (!isset($_SESSION['admin_id'])) {
-  error_log("User not logged in, redirecting to login page");
+$title = 'Packages';
+$pageHeader = 'Packages';
+$childView = __DIR__ . '/package.php';
 
-  header("Location: ../auth/admin-login.php");
-  exit();
-}
+include('../../layouts/admin.php');
 
 $sql = "SELECT * FROM packages";
 
@@ -22,128 +20,55 @@ if ($result->num_rows > 0) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>PAP's Fitness Gym - Manage Packages</title>
-  </head>
-
-  <body style="background-color: black; position: relative;">
-    <header class="pt-16 pb-24 flex items-center px-52 justify-between">
-      <div class="w-24 h-24 overflow-hidden">
-        <img src="../../public/images/logo.png" alt="Logo" class="w-full h-auto">
-      </div>
-
-      <p class="text-4xl font-bold text-[#fabf3b]">MANAGE PACKAGES</p>
-
+<div class="px-52 w-full flex flex-col items-center py-16">
+  <div class="max-w-6xl w-full flex flex-col space-y-8 items-start">
+    <div class="flex justify-end w-full">
       <button 
-        class="bg-[#fabf3b] px-5 py-1.5 text-black font-medium rounded-sm"
-        onclick="window.location.href='../../controllers/logoutController.php'"
+        class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm"
+        onclick="window.location.href='package/create.php'"
       >
-        Logout
+        Add Package
       </button>
-    </header>
-
-    <div class="px-52 w-full">
-      <div class="grid grid-cols-6 gap-x-10">
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='home.php'"
-        >
-          Home Page
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='membership.php'"
-        >
-          Membership Management
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='equipment.php'"
-        >
-          Manage Equipment
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='package.php'"
-        >
-          Manage Packages
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Manage Pricing
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Manage Billing
-        </button>
-      </div>
     </div>
+    
+    <div class="w-full rounded-md bg-[#fabf3b]">
+      <table class="w-full table-auto">
+        <thead>
+          <tr>
+            <th class="py-4 border-b border-r border-black">Name</th>
+            <th class="border-b border-r border-black">Description</th>
+            <th class="border-b border-r border-black">Daily Price</th>
+            <th class="border-b border-r border-black">Monthly Price</th>
+            <th class="border-b border-r border-black">Weekly Price</th>
+            <th class="border-b border-r border-black">Yearly Price</th>
+            <th class="border-b border-black">Actions</th>
+          </tr>
+        </thead>
 
-    <div class="px-52 w-full flex flex-col items-center py-16">
-      <div class="max-w-6xl w-full flex flex-col space-y-8 items-start">
-        <div class="flex justify-end w-full">
-          <button 
-            class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm"
-            onclick="window.location.href='package/create.php'"
-          >
-            Add Package
-          </button>
-        </div>
-        
-        <div class="w-full rounded-md bg-[#fabf3b]">
-          <table class="w-full table-auto">
-            <thead>
-              <tr>
-                <th class="py-4 border-b border-r border-black">Name</th>
-                <th class="border-b border-r border-black">Description</th>
-                <th class="border-b border-r border-black">Daily Price</th>
-                <th class="border-b border-r border-black">Monthly Price</th>
-                <th class="border-b border-r border-black">Weekly Price</th>
-                <th class="border-b border-r border-black">Yearly Price</th>
-                <th class="border-b border-black">Actions</th>
-              </tr>
-            </thead>
+        <tbody>
+          <?php foreach ($packages as $package): ?>
+            <tr>
+              <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $package['name'] ?></td>
+              <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $package['description'] ?></td>
+              <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['daily_rate']) ? $package['daily_rate'] : 'N/A' ?></td>
+              <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['monthly_rate']) ? $package['monthly_rate'] : 'N/A' ?></td>
+              <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['weekly_rate']) ? $package['weekly_rate'] : 'N/A' ?></td>
+              <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['yearly_rate']) ? $package['yearly_rate'] : 'N/A' ?></td>
+              <td class="py-4 text-base text-center border-b border-black">
+                <p>
+                  <a href="package/edit.php?package_id=<?php echo $package['package_id']?>">Edit</a> 
+                  <span>-</span>
 
-            <tbody>
-              <?php foreach ($packages as $package): ?>
-                <tr>
-                  <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $package['name'] ?></td>
-                  <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $package['description'] ?></td>
-                  <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['daily_rate']) ? $package['daily_rate'] : 'N/A' ?></td>
-                  <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['monthly_rate']) ? $package['monthly_rate'] : 'N/A' ?></td>
-                  <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['weekly_rate']) ? $package['weekly_rate'] : 'N/A' ?></td>
-                  <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['yearly_rate']) ? $package['yearly_rate'] : 'N/A' ?></td>
-                  <td class="py-4 text-base text-center border-b border-black">
-                    <p>
-                      <a href="package/edit.php?package_id=<?php echo $package['package_id']?>">Edit</a> 
-                      <span>-</span>
-
-                      <form action='../../controllers/packageController.php' method='POST'>
-                        <input type="hidden" name="package_id" value="<?php echo $package['package_id']?>">
-                        <button type="submit" name="delete">Delete</button> 
-                      </form>
-                    </p>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
+                  <form action='../../controllers/packageController.php' method='POST'>
+                    <input type="hidden" name="package_id" value="<?php echo $package['package_id']?>">
+                    <button type="submit" name="delete">Delete</button> 
+                  </form>
+                </p>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
     </div>
-  </body>
-</html>
+  </div>
+</div>

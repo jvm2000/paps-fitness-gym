@@ -1,13 +1,12 @@
 <?php
-session_start();
 include "../../../config/connect.php";
 
-if (!isset($_SESSION['admin_id'])) {
-  error_log("User not logged in, redirecting to login page");
+$title = "Edit Package";
+$pageHeader = "Edit Package";
+$childView = __DIR__ . '/edit.php';
+$noHeader = true;
 
-  header("Location: ../auth/admin-login.php");
-  exit();
-}
+include('../../../layouts/admin.php');
 
 $package_id = $_GET['package_id'];
 
@@ -23,146 +22,73 @@ $weekly_rate = $package['weekly_rate'];
 $yearly_rate = $package['yearly_rate'];
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>PAP's Fitness Gym - Edit Packages</title>
-  </head>
-
-  <body style="background-color: black; position: relative;">
-    <header class="pt-16 pb-24 flex items-center px-52 justify-between">
-      <div class="w-24 h-24 overflow-hidden">
-        <img src="../../../public/images/logo.png" alt="Logo" class="w-full h-auto">
-      </div>
-
-      <p class="text-4xl font-bold text-[#fabf3b]">EDIT PACKAGES</p>
-
+<div class="px-52 w-full flex flex-col items-center">
+  <div class="max-w-xl w-full flex flex-col space-y-8 items-start">
+    <div class="flex justify-end w-full">
       <button 
-        class="bg-[#fabf3b] px-5 py-1.5 text-black font-medium rounded-sm"
-        onclick="window.location.href='../../controllers/logoutController.php'"
+        class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm"
+        onclick="window.location.href='../package.php'"
       >
-        Logout
+        Back
       </button>
-    </header>
-
-    <div class="px-52 w-full">
-      <div class="grid grid-cols-6 gap-x-10">
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='home.php'"
-        >
-          Home Page
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='membership.php'"
-        >
-          Membership Management
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Manage Equipment
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='package.php'"
-        >
-          Manage Packages
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Manage Pricing
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Manage Billing
-        </button>
-      </div>
     </div>
 
-    <div class="px-52 w-full flex flex-col items-center py-16">
-      <div class="max-w-xl w-full flex flex-col space-y-8 items-start">
-        <div class="flex justify-end w-full">
-          <button 
-            class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm"
-            onclick="window.location.href='../package.php'"
-          >
-            Back
-          </button>
-        </div>
+    <div class="py-10 px-6 bg-[#fabf3b] flex flex-col items-center space-y-6 w-full">
+      <p class="text-3xl text-black font-bold">Class Schedule</p>
 
-        <div class="py-10 px-6 bg-[#fabf3b] flex flex-col items-center space-y-6 w-full">
-          <p class="text-3xl text-black font-bold">Class Schedule</p>
+      <form action="../../../controllers/packageController.php" method="POST" class="space-y-6 flex flex-col w-full">
+        <input type="hidden" name="package_id" value="<?php echo $package_id ?>">
+        <input 
+          name="name"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+          placeholder="Package Name"
+          value="<?php echo $name ?>"
+        />
 
-          <form action="../../../controllers/packageController.php" method="POST" class="space-y-6 flex flex-col w-full">
-            <input type="hidden" name="package_id" value="<?php echo $package_id ?>">
-            <input 
-              name="name"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Package Name"
-              value="<?php echo $name ?>"
-            />
+        <textarea 
+          name="description"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+          placeholder="Description"
+        ><?php echo $description ?></textarea>
 
-            <textarea 
-              name="description"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Description"
-            ><?php echo $description ?></textarea>
+        <input 
+          name="daily_rate"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+          placeholder="Daily Rate"
+          value="<?php echo $daily_rate ?>"
+        />
 
-            <input 
-              name="daily_rate"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Daily Rate"
-              value="<?php echo $daily_rate ?>"
-            />
+        <input 
+          name="monthly_rate"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+          placeholder="Monthly Rate"
+          value="<?php echo $monthly_rate ?>"
+        />
 
-            <input 
-              name="monthly_rate"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Monthly Rate"
-              value="<?php echo $monthly_rate ?>"
-            />
+        <input 
+          name="weekly_rate"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+          placeholder="Weekly Rate"
+          value="<?php echo $weekly_rate ?>"
+        />
 
-            <input 
-              name="weekly_rate"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Weekly Rate"
-              value="<?php echo $weekly_rate ?>"
-            />
+        <input 
+          name="yearly_rate"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+          placeholder="Yearly Rate"
+          value="<?php echo $yearly_rate ?>"
+        />
 
-            <input 
-              name="yearly_rate"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Yearly Rate"
-              value="<?php echo $yearly_rate ?>"
-            />
-
-            <button 
-              class="bg-black px-5 py-3 text-black text-base font-medium rounded-lg w-full text-white"
-              name="update"
-            >
-              Update
-            </button>
-          </form>
-        </div>
-      </div>
+        <button 
+          class="bg-black px-5 py-3 text-black text-base font-medium rounded-lg w-full text-white"
+          name="update"
+        >
+          Update
+        </button>
+      </form>
     </div>
-  </body>
-</html>
+  </div>
+</div>
 
 <script>
   const selectType = document.getElementById('select-type');

@@ -38,6 +38,7 @@ if ($result->num_rows > 0) {
 
         <button 
           class="text-yellow-300 bg-black px-10 py-1.5 text-black text-sm font-medium rounded-sm"
+          onclick="window.location.href='membership/create.php?package_id=<?php echo $package['package_id']?>'"
         >
           Join Now
         </button>

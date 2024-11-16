@@ -20,7 +20,7 @@ if ($result->num_rows > 0) {
 }
 ?>
 
-<div class="px-52 w-full flex flex-col items-center">
+<div class="px-52 w-full flex flex-col items-center py-16">
   <div class="max-w-full w-full grid grid-cols-5 gap-8">
     <?php foreach ($equipments as $equipment): ?>
       <div class="w-full bg-[#fabf3b] flex flex-col pb-2 rounded-lg">
