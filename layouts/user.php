@@ -7,6 +7,8 @@ if (!isset($_SESSION['user_id'])) {
   header("Location: ../auth/login.php");
   exit();
 }
+
+$noHeader = isset($noHeader) ? $noHeader : false; 
 ?>
 
 <!DOCTYPE html>
@@ -19,12 +21,12 @@ if (!isset($_SESSION['user_id'])) {
   </head>
 
   <body style="background-color: black; position: relative;">
-  <header class="pt-16 pb-24 flex items-center px-52 justify-between">
+    <header class="pt-16 pb-24 flex items-center px-52 justify-between">
       <div class="w-24 h-24 overflow-hidden">
-        <img src="../../public/images/logo.png" alt="Logo" class="w-full h-auto">
+        <img src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/paps-fitness-gym/public/images/logo.png'; ?>" alt="Logo" class="w-full h-auto">
       </div>
 
-      <p class="text-4xl font-bold text-[#fabf3b] uppercase"><?php echo $pageHeader; ?></p>
+      <p class="text-4xl font-bold text-[#fabf3b] uppercase">User - <?php echo $pageHeader; ?></p>
 
       <button 
         class="bg-[#fabf3b] px-5 py-1.5 text-black font-medium rounded-sm"
@@ -34,54 +36,54 @@ if (!isset($_SESSION['user_id'])) {
       </button>
     </header>
 
-    <div class="px-52 w-full">
-      <div class="grid grid-cols-6 gap-x-10">
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='home.php'"
-        >
-          Home Page
-        </button>
+    <?php if(!$noHeader): ?>
+      <div class="px-52 w-full">
+        <div class="grid grid-cols-6 gap-x-10">
+          <button 
+            class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+            onclick="window.location.href='home.php'"
+          >
+            Home Page
+          </button>
 
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='profile.php'"
-        >
-          Profile
-        </button>
+          <button 
+            class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+            onclick="window.location.href='profile.php'"
+          >
+            Profile
+          </button>
 
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='equipment.php'"
-        >
-          Equipment
-        </button>
+          <button 
+            class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+            onclick="window.location.href='equipment.php'"
+          >
+            Equipment
+          </button>
 
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='membership.php'"
-        >
-          Membership
-        </button>
+          <button 
+            class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+            onclick="window.location.href='membership.php'"
+          >
+            Membership
+          </button>
 
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='schedule.php'"
-        >
-          Class Schedule
-        </button>
+          <button 
+            class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+            onclick="window.location.href='schedule.php'"
+          >
+            Class Schedule
+          </button>
 
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='billing.php'"
-        >
-          Billing History
-        </button>
+          <button 
+            class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
+            onclick="window.location.href='billing.php'"
+          >
+            Billing History
+          </button>
+        </div>
       </div>
-    </div>
+    <?php endif; ?>
 
-    <div class="px-52 w-full flex flex-col items-center py-16">
-      <?php include_once($childView); ?>
-    </div>
+    <?php include_once($childView); ?>
   </body>
 </html>

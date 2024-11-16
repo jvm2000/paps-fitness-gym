@@ -1,13 +1,11 @@
 <?php
-session_start();
 include "../../config/connect.php";
 
-if (!isset($_SESSION['user_id'])) {
-    error_log("User not logged in, redirecting to login page");
+$title = 'Home';
+$pageHeader = 'Equipments';
+$childView = __DIR__ . '/equipment.php';
 
-    header("Location: ../auth/login.php");
-    exit();
-}
+include('../../layouts/user.php');
 
 $sql = "SELECT * FROM equipments";
 
@@ -22,102 +20,29 @@ if ($result->num_rows > 0) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>PAP's Fitness Gym - Equipments</title>
-  </head>
+<div class="px-52 w-full flex flex-col items-center">
+  <div class="max-w-full w-full grid grid-cols-5 gap-8">
+    <?php foreach ($equipments as $equipment): ?>
+      <div class="w-full bg-[#fabf3b] flex flex-col pb-2 rounded-lg">
+        <img 
+          src="<?php echo '../' . $equipment['image']; ?>"
+          alt="<?php echo $equipment['name'] ?>"
+          class="w-full h-44 object-cover"
+        />
 
-  <body style="background-color: black; position: relative;">
-  <header class="pt-16 pb-24 flex items-center px-52 justify-between">
-      <div class="w-24 h-24 overflow-hidden">
-        <img src="../../public/images/logo.png" alt="Logo" class="w-full h-auto">
-      </div>
-
-      <p class="text-4xl font-bold text-[#fabf3b]">EQUIPMENTS</p>
-
-      <button 
-        class="bg-[#fabf3b] px-5 py-1.5 text-black font-medium rounded-sm"
-        onclick="window.location.href='../../controllers/logoutController.php'"
-      >
-        Logout
-      </button>
-    </header>
-
-    <div class="px-52 w-full">
-      <div class="grid grid-cols-6 gap-x-10">
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='home.php'"
-        >
-          Home Page
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='profile.php'"
-        >
-          Profile
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='equipment.php'"
-        >
-          Equipment
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='membership.php'"
-        >
-          Membership
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Class Schedule
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Billing History
-        </button>
-      </div>
-    </div>
-
-    <div class="px-52 w-full flex flex-col items-center py-16">
-      <div class="max-w-full w-full grid grid-cols-5 gap-8">
-        <?php foreach ($equipments as $equipment): ?>
-          <div class="w-full bg-[#fabf3b] flex flex-col pb-2 rounded-lg">
-            <img 
-              src="<?php echo '../' . $equipment['image']; ?>"
-              alt="<?php echo $equipment['name'] ?>"
-              class="w-full h-44 object-cover"
-            />
-
-            <div class="space-y-1.5 px-4 py-2">
-              <div class="flex items-center justify-between">
-                <p class="text-base font-semibold"><?php echo $equipment['name'] ?></p>
-                <p class="text-base font-medium">Qty: <?php echo $equipment['quantity'] ?></p>
-              </div>
-
-              <p class="text-base">Last Maintenance: <?php echo $equipment['last_maintenance'] ?></p>
-
-              <p class="text-base">Due Maintenance: <?php echo $equipment['due_maintenance'] ?></p>
-
-              <p class="text-base">Status: <?php echo $equipment['status'] ?></p>
-            </div>
+        <div class="space-y-1.5 px-4 py-2">
+          <div class="flex items-center justify-between">
+            <p class="text-base font-semibold"><?php echo $equipment['name'] ?></p>
+            <p class="text-base font-medium">Qty: <?php echo $equipment['quantity'] ?></p>
           </div>
-        <?php endforeach; ?>
+
+          <p class="text-base">Last Maintenance: <?php echo $equipment['last_maintenance'] ?></p>
+
+          <p class="text-base">Due Maintenance: <?php echo $equipment['due_maintenance'] ?></p>
+
+          <p class="text-base">Status: <?php echo $equipment['status'] ?></p>
+        </div>
       </div>
-    </div>
-  </body>
-</html>
+    <?php endforeach; ?>
+  </div>
+</div>
