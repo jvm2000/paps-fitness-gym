@@ -1,99 +1,101 @@
 <?php
-session_start();
+include "../../../config/connect.php";
 
-if (!isset($_SESSION['admin_id'])) {
-    error_log("User not logged in, redirecting to login page");
+$title = "Membership Create";
+$pageHeader = "Membership Create";
+$childView = __DIR__ . '/create.php';
+$noHeader = true;
 
-    header("Location: ../auth/admin-login.php");
-    exit();
-}
+include('../../../layouts/user.php');
+
+// $userID = $_SESSION['user_id'];
+
+// $sql = "SELECT * FROM users WHERE user_id = $userID";
+// $users = mysqli_query($conn,$sql);
+// $user = mysqli_fetch_assoc($users);
+
+// $firstname = $user['firstname'];
+// $lastname = $user['lastname'];
+// $email = $user['email'];
+// $phone = $user['phone'];
+// $gender = $user['gender'];
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>PAP's Fitness Gym - Add Packages</title>
-  </head>
+<div class="px-52 w-full flex flex-col items-center">
+  <form 
+    action="../../../controllers/authController.php" 
+    method="POST"
+    class="max-w-2xl bg-[#fabf3b] w-full px-6 py-5 flex flex-col items-start space-y-10"
+  >
+    <input type="hidden" name="user_id" value="<?php echo $userID ?>">
 
-  <body style="background-color: black; position: relative;">
-    <header class="pt-16 pb-24 flex items-center px-52 justify-between">
-      <div class="w-24 h-24 overflow-hidden">
-        <img src="../../../public/images/logo.png" alt="Logo" class="w-full h-auto">
+    <p class="text-5xl text-black font-bold">Edit Profile</p>
+
+    <div class="flex flex-col items-start max-w-full w-full space-y-6">
+      <div class="space-y-1.5 w-full">
+        <p class="text-base font-medium">First Name:</p>
+        <input 
+          name="firstname"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-[#fabf3b] text-black"
+          placeholder="First Name"
+        />
       </div>
 
-      <p class="text-4xl font-bold text-[#fabf3b]">ADD PACKAGES</p>
+      <div class="space-y-1.5 w-full">
+        <p class="text-base font-medium">Last Name:</p>
+        <input 
+          name="lastname"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-[#fabf3b] text-black"
+          placeholder="Last Name"
+        />
+      </div>
 
-      <button 
-        class="bg-[#fabf3b] px-5 py-1.5 text-black font-medium rounded-sm"
-        onclick="window.location.href='../../controllers/logoutController.php'"
-      >
-        Logout
-      </button>
-    </header>
+      <div class="space-y-1.5 w-full">
+        <p class="text-base font-medium">Email:</p>
+        <input 
+          type="email"
+          name="email"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-[#fabf3b] text-black"
+          placeholder="Email"
+        />
+      </div>
 
-    <div class="px-52 w-full flex flex-col items-center py-16">
-      <div class="max-w-xl w-full flex flex-col space-y-8 items-start">
-        <div class="flex justify-end w-full">
-          <button 
-            class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm"
-            onclick="window.location.href='../package.php'"
-          >
-            Back
-          </button>
-        </div>
+      <div class="space-y-1.5 w-full">
+        <p class="text-base font-medium">Phone:</p>
+        <input 
+          name="phone"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-[#fabf3b] text-black"
+          placeholder="Phone"
+        />
+      </div>
 
-        <div class="py-10 px-6 bg-[#fabf3b] flex flex-col items-center space-y-6 w-full">
-          <p class="text-3xl text-black font-bold">Package</p>
-
-          <form action="../../../controllers/packageController.php" method="POST" class="space-y-6 flex flex-col w-full">
-            <input 
-              name="name"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Package Name"
-            />
-
-            <textarea 
-              name="description"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Description"
-            ></textarea>
-
-            <input 
-              name="daily_rate"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Daily Rate"
-            />
-
-            <input 
-              name="monthly_rate"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Monthly Rate"
-            />
-
-            <input 
-              name="weekly_rate"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Weekly Rate"
-            />
-
-            <input 
-              name="yearly_rate"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-              placeholder="Yearly Rate"
-            />
-
-            <button 
-              class="bg-black px-5 py-3 text-black text-base font-medium rounded-lg w-full text-white"
-              name="create"
-            >
-              Create
-            </button>
-          </form>
-        </div>
+      <div class="space-y-1.5 w-full">
+        <p class="text-base font-medium">Gender:</p>
+        <select 
+          name="gender" 
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-[#fabf3b] text-black"
+        >
+          <option value="male" <?php echo $gender === 'male' ? 'selected' : ''; ?>>Male</option>
+          <option value="female" <?php echo $gender === 'female' ? 'selected' : ''; ?>>Female</option>
+        </select>
       </div>
     </div>
-  </body>
-</html>
+
+    <div class="flex items-center space-x-4">
+      <div 
+        class="bg-black text-yellow-300 px-5 py-1.5 text-black font-medium rounded-sm cursor-pointer"
+        onclick="window.location.href='../membership.php'"
+      >
+        Back
+      </div>
+
+      <button 
+        class="bg-black text-yellow-300 px-5 py-1.5 text-black font-medium rounded-sm"
+        name="create"
+        type="submit"
+      >
+        Create
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,7 +1,7 @@
 <?php
 include "../../config/connect.php";
 
-$title = 'Home';
+$title = 'Equipments';
 $pageHeader = 'Equipments';
 $childView = __DIR__ . '/equipment.php';
 

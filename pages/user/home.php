@@ -1,6 +1,6 @@
 <?php
 $title = 'Home';
-$pageHeader = 'Dashboard';
+$pageHeader = 'Home';
 $childView = __DIR__ . '/home.php';
 
 include('../../layouts/user.php');

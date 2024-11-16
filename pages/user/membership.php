@@ -1,7 +1,7 @@
 <?php
 include "../../config/connect.php";
 
-$title = "PAP's Fitness Gym - Home";
+$title = "Membership";
 $pageHeader = "Membership";
 $childView = __DIR__ . '/membership.php';
 
