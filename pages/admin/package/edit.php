@@ -34,7 +34,7 @@ $yearly_rate = $package['yearly_rate'];
     </div>
 
     <div class="py-10 px-6 bg-[#fabf3b] flex flex-col items-center space-y-6 w-full">
-      <p class="text-3xl text-black font-bold">Class Schedule</p>
+      <p class="text-3xl text-black font-bold">Edit Package</p>
 
       <form action="../../../controllers/packageController.php" method="POST" class="space-y-6 flex flex-col w-full">
         <input type="hidden" name="package_id" value="<?php echo $package_id ?>">

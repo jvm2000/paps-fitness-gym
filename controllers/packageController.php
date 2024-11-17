@@ -41,8 +41,9 @@
 
       if($conn->query($sql)){
         header("Location: ../pages/admin/package.php?message=Package Updated Successfully");
+      } else {
+        echo "ERROR! Created unsuccessfully";
       }
-      echo "ERROR! Created unsuccessfully";
     }
 
     elseif(isset($_POST['delete'])){

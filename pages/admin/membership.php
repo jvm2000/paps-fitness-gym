@@ -1,8 +1,8 @@
 <?php
 include "../../config/connect.php";
 
-$title = 'Dashboard';
-$pageHeader = 'Dashboard';
+$title = 'Memberships';
+$pageHeader = 'Memberships';
 $childView = __DIR__ . '/membership.php';
 
 include('../../layouts/admin.php');
@@ -14,8 +14,8 @@ $result = mysqli_query($conn, $sql);
 $memberships = [];
 
 if ($result->num_rows > 0) {
-  while ($package = $result->fetch_assoc()) {
-    $memberships[] = $package; 
+  while ($membership = $result->fetch_assoc()) {
+    $memberships[] = $membership; 
   }
 }
 ?>
