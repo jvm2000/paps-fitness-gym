@@ -45,29 +45,39 @@ $gender = $user['gender'];
     <input type="hidden" name="payment_status" value="pending">
     <input type="hidden" name="start_date">
     <input type="hidden" name="expiration_date">
-    <input type="hidden" name="amount" id="amount">
     
     <p class="text-5xl text-black font-bold">Join <?php echo $name?></p>
 
     <div class="flex flex-col items-start max-w-full w-full space-y-6">
-      <div class="flex items-center space-x-4 w-full">
-        <p class="text-base font-medium">Full Name:</p>
-        <p class="text-base font-medium"><?php echo $first_name ?> <?php echo $last_name ?></p>
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center space-x-4">
+          <p class="text-base font-medium">Full Name:</p>
+          <p class="text-base font-medium"><?php echo $first_name ?> <?php echo $last_name ?></p>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <p class="text-base font-medium">Contact Number:</p>
+          <p class="text-base font-medium"><?php echo $phone ?></p>
+        </div>
       </div>
 
-      <div class="flex items-center space-x-4 w-full">
-        <p class="text-base font-medium">Contact Number:</p>
-        <p class="text-base font-medium"><?php echo $phone ?></p>
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center space-x-4">
+          <p class="text-base font-medium">Email:</p>
+          <p class="text-base font-medium"><?php echo $email ?></p>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <p class="text-base font-medium">Gender:</p>
+          <p class="text-base font-medium"><?php echo $gender ?></p>
+        </div>
       </div>
 
-      <div class="flex items-center space-x-4 w-full">
-        <p class="text-base font-medium">Email:</p>
-        <p class="text-base font-medium"><?php echo $email ?></p>
-      </div>
-
-      <div class="flex items-center space-x-4 w-full">
-        <p class="text-base font-medium">Gender:</p>
-        <p class="text-base font-medium"><?php echo $gender ?></p>
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center space-x-4">
+          <p class="text-base font-medium">Amount:</p>
+          <input name="amount" id="amount" class="text-base font-medium outline-none border-0 pointer-events-none bg-inherit" />
+        </div>
       </div>
 
       <div class="space-y-1.5 w-full">

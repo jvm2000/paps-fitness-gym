@@ -50,5 +50,16 @@
       }
       echo "ERROR! Created unsuccessfully";
     }
+
+    elseif(isset($_POST['cancel'])){
+      $membership_id = $_POST['membership_id'];
+
+      $sql = "DELETE FROM memberships WHERE membership_id=$membership_id";
+  
+      if($conn->query($sql)){
+        header("Location: ../pages/user/membership.php?message=Membership Cancelled Successfully");
+      }
+      echo "ERROR! Created unsuccessfully";
+    }
   }
 ?>

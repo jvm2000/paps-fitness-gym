@@ -116,7 +116,6 @@ include('../../../layouts/admin.php');
   </div>
 </div>
 
-
 <script>
   document.getElementById('uploadButton').addEventListener('click', function () {
     document.getElementById('fileInput').click();
