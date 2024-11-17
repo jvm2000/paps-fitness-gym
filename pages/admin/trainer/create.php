@@ -36,7 +36,7 @@ include('../../../layouts/admin.php');
           <option value="boxing">Boxing</option>
           <option value="yoga">Yoga</option>
           <option value="kick_boxing">Kick Boxing</option>
-          <option value="butangi_drop_down">Butangi Drop Down</option>
+          <option value="membership">Membership</option>
         </select>
 
         <input 
