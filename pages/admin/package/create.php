@@ -35,21 +35,27 @@ include('../../../layouts/admin.php');
         ></textarea>
 
         <input 
+          name="hourly_rate"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+          placeholder="Hourly Rate"
+        />
+
+        <input 
           name="daily_rate"
           class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
           placeholder="Daily Rate"
         />
 
         <input 
-          name="monthly_rate"
-          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-          placeholder="Monthly Rate"
-        />
-
-        <input 
           name="weekly_rate"
           class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
           placeholder="Weekly Rate"
+        />
+        
+        <input 
+          name="monthly_rate"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+          placeholder="Monthly Rate"
         />
 
         <input 

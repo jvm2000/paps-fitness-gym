@@ -17,6 +17,7 @@ $packages = mysqli_query($conn,$sql);
 $package = mysqli_fetch_assoc($packages);
 
 $name = $package['name'];
+$hourly_rate = $package['hourly_rate'] ?? 0;
 $daily_rate = $package['daily_rate'];
 $monthly_rate = $package['monthly_rate'];
 $weekly_rate = $package['weekly_rate'];
@@ -103,6 +104,7 @@ $gender = $user['gender'];
           id="membership-type"
         >
           <option value="0" selected>Select Membership Type</option>
+          <option value="hourly_rate">Hourly</option>
           <option value="daily_rate">Daily</option>
           <option value="weekly_rate">Weekly</option>
           <option value="monthly_rate">Monthly</option>
@@ -132,6 +134,7 @@ $gender = $user['gender'];
 
 <script>
 const packageRates = {
+  hourly_rate: <?php echo $hourly_rate ?>,
   daily_rate: <?php echo $daily_rate ?>,
   weekly_rate: <?php echo $weekly_rate ?>,
   monthly_rate: <?php echo $monthly_rate ?>,
@@ -161,6 +164,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let expirationDate = new Date(today);
 
     switch (selectedValue) {
+      case "hourly_rate":
+        expirationDate = new Date(today.setDate(today.getDate()));
+        break;
       case "daily_rate":
         expirationDate = new Date(today.setDate(today.getDate() + 1));
         break;

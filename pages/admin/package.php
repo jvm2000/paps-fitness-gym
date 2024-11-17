@@ -21,7 +21,7 @@ if ($result->num_rows > 0) {
 ?>
 
 <div class="px-52 w-full flex flex-col items-center py-16">
-  <div class="max-w-6xl w-full flex flex-col space-y-8 items-start">
+  <div class="max-w-7xl w-full flex flex-col space-y-8 items-start">
     <div class="flex justify-end w-full">
       <button 
         class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm"
@@ -37,6 +37,7 @@ if ($result->num_rows > 0) {
           <tr>
             <th class="py-4 border-b border-r border-black">Name</th>
             <th class="border-b border-r border-black">Description</th>
+            <th class="border-b border-r border-black">Hourly Price</th>
             <th class="border-b border-r border-black">Daily Price</th>
             <th class="border-b border-r border-black">Monthly Price</th>
             <th class="border-b border-r border-black">Weekly Price</th>
@@ -50,6 +51,7 @@ if ($result->num_rows > 0) {
             <tr>
               <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $package['name'] ?></td>
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $package['description'] ?></td>
+              <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['hourly_rate']) ? $package['hourly_rate'] : 'N/A' ?></td>
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['daily_rate']) ? $package['daily_rate'] : 'N/A' ?></td>
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['monthly_rate']) ? $package['monthly_rate'] : 'N/A' ?></td>
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo !empty($package['weekly_rate']) ? $package['weekly_rate'] : 'N/A' ?></td>
