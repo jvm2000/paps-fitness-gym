@@ -45,6 +45,7 @@ $gender = $user['gender'];
     <input type="hidden" name="payment_status" value="pending">
     <input type="hidden" name="start_date">
     <input type="hidden" name="expiration_date">
+    <input type="hidden" name="created_at">
     
     <p class="text-5xl text-black font-bold">Join <?php echo $name?></p>
 
@@ -142,6 +143,7 @@ const today = new Date();
 const formattedDate = today.toISOString().split('T')[0];
 
 document.querySelector('input[name="start_date"]').value = formattedDate;
+document.querySelector('input[name="created_at"]').value = formattedDate;
 
 document.addEventListener("DOMContentLoaded", () => {
   const selectElement = document.querySelector("select[name='membership_type']");
