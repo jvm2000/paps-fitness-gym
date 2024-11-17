@@ -28,12 +28,33 @@ $noHeader = isset($noHeader) ? $noHeader : false;
 
       <p class="text-4xl font-bold text-[#fabf3b] uppercase">User - <?php echo $pageHeader; ?></p>
 
-      <button 
-        class="bg-[#fabf3b] px-5 py-1.5 text-black font-medium rounded-sm"
-        onclick="window.location.href='../../controllers/logoutController.php'"
-      >
-        Logout
-      </button>
+      <div class="relative">
+        <img 
+          src="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/paps-fitness-gym/public/images/user.png'; ?>" 
+          class="w-14 h-auto object-cover border-2 border-white rounded-full cursor-pointer"
+          id="userImage"
+        />
+
+        <div
+          id="dropdownMenu"
+          style="display: none;"
+          class="absolute z-[9999] top-16 right-0 w-64 bg-[#fabf3b] rounded-lg py-2 px-4"
+        >
+          <button 
+            class="bg-inherit text-black font-medium rounded-sm w-full hover:bg-[#e6ae36] text-left py-2 px-4"
+            onclick="window.location.href='../../pages/user/profile.php'"
+          >
+            View Profile
+          </button>
+
+          <button 
+            class="bg-inherit text-black font-medium rounded-sm w-full hover:bg-[#e6ae36] text-left py-2 px-4"
+            onclick="window.location.href='../../controllers/logoutController.php'"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
     </header>
 
     <?php if(!$noHeader): ?>
@@ -87,3 +108,21 @@ $noHeader = isset($noHeader) ? $noHeader : false;
     <?php include_once($childView); ?>
   </body>
 </html>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const userImage = document.getElementById('userImage');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    userImage.addEventListener('click', () => {
+      const isHidden = dropdownMenu.style.display === 'none';
+      dropdownMenu.style.display = isHidden ? 'block' : 'none';
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!userImage.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.style.display = 'none';
+      }
+    });
+  });
+</script>

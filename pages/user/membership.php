@@ -32,6 +32,15 @@ if ($result->num_rows > 0) {
     $memberships[] = $membership; 
   }
 }
+
+$dateToday = date("Y-m-d");
+
+if (is_array($memberships) && !empty($memberships) && $memberships[0]['expiration_date'] === $dateToday) {
+  $membershipId = $memberships[0]['membership_id'];
+  $renewable = "UPDATE memberships SET status = 'renewable', payment_status='renewable' WHERE membership_id = $membershipId";
+
+  $conn->query($renewable);
+}
 ?>
 
 <div class="w-full flex flex-col items-center py-24 space-y-12">
@@ -65,7 +74,7 @@ if ($result->num_rows > 0) {
       <div class="flex items-center justify-between w-full">
         <p class="text-2xl font-semibold">Active Membership</p>
         <p class="text-base font-semibold capitalize">
-          <?php echo $memberships[0]['payment_status'] === 'pending' ? 'requires payment' : 'paid' ?>
+          <?php echo ($memberships[0]['payment_status'] === 'pending' && $memberships[0]['status'] !== 'active') ? 'requires payment' : 'paid' ?>
         </p>
       </div>
 
@@ -101,7 +110,7 @@ if ($result->num_rows > 0) {
         </div>
       </div>
 
-      <?php if($memberships[0]['payment_status'] === 'pending'): ?>
+      <?php if($memberships[0]['payment_status'] === 'pending' && $memberships[0]['status'] === 'pending'): ?>
         <div class="space-y-1.5 w-full">
           <button 
             class="text-white bg-red-600 justify-center w-full py-3 text-lg font-medium rounded-lg"
@@ -122,11 +131,51 @@ if ($result->num_rows > 0) {
         </div>
       <?php endif; ?>
 
-      <?php if($memberships[0]['payment_status'] === 'paid'): ?>
+      <?php if($memberships[0]['payment_status'] === 'paid'  && $memberships[0]['status'] === 'pending'): ?>
+        <div class="space-y-1.5 w-full">
+          <button 
+            class="text-white bg-orange-600 justify-center w-full py-3 text-lg font-medium rounded-lg pointer-events-none"
+          >
+            Pending
+          </button>
+
+          <form action='../../controllers/membershipController.php' method='POST'>
+            <input type="hidden" name="membership_id" value="<?php echo $memberships[0]['membership_id']?>">
+            <button 
+              class="text-black bg-inherit justify-center w-full py-3 text-lg font-medium rounded-lg"
+              name="cancel"
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      <?php endif; ?>
+
+      <?php if($memberships[0]['payment_status'] === 'approve'  && $memberships[0]['status'] === 'active'): ?>
+        <div class="space-y-1.5 w-full">
+          <button 
+            class="text-white bg-green-600 justify-center w-full py-3 text-lg font-medium rounded-lg pointer-events-none"
+          >
+            Active
+          </button>
+
+          <form action='../../controllers/membershipController.php' method='POST'>
+            <input type="hidden" name="membership_id" value="<?php echo $memberships[0]['membership_id']?>">
+            <button 
+              class="text-black bg-inherit justify-center w-full py-3 text-lg font-medium rounded-lg"
+              name="cancel"
+            >
+              End
+            </button>
+          </form>
+        </div>
+      <?php endif; ?>
+
+      <?php if($memberships[0]['payment_status'] === 'renewable' && $memberships[0]['status'] === 'renewable'): ?>
         <button 
-          class="text-white bg-green-600 justify-center w-full py-3 text-lg font-medium rounded-lg pointer-events-none"
+          class="text-white bg-blue-600 justify-center w-full py-3 text-lg font-medium rounded-lg pointer-events-none"
         >
-          Active
+          Renewable
         </button>
       <?php endif; ?>
     </div>

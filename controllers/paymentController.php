@@ -1,6 +1,9 @@
 <?php
+  session_start();
   include"../config/connect.php";
   
+  $userID = $_SESSION['user_id'];
+
   if($_SERVER["REQUEST_METHOD"] == "POST"){
     //Create
     if(isset($_POST['create'])){
@@ -34,8 +37,8 @@
       }
 
       $insert_sql = "INSERT INTO payments 
-      (email, transaction_type, status, method, total_paid, date_paid, receipt_image) 
-      VALUES ('$email', '$transaction_type', '$status', '$method', '$total_paid', '$date_paid', '$receipt_image')";
+      (user_id, email, transaction_type, status, method, total_paid, date_paid, receipt_image) 
+      VALUES ('$userID', '$email', '$transaction_type', '$status', '$method', '$total_paid', '$date_paid', '$receipt_image')";
 
       $membership_id = $_POST['membership_id'];
       $payment_status = "paid";
