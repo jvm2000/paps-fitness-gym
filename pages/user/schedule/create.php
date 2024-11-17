@@ -1,15 +1,23 @@
 <?php
-session_start();
 include "../../../config/connect.php";
 
-if (!isset($_SESSION['user_id'])) {
-  error_log("User not logged in, redirecting to login page");
+$title = "Schedule Class";
+$pageHeader = "Schedule Class";
+$childView = __DIR__ . '/create.php';
+$noHeader = true;
 
-  header("Location: ../auth/login.php");
-  exit();
-}
+include('../../../layouts/user.php');
 
-$sql = "SELECT * FROM trainers";
+$userID = $_SESSION['user_id'];
+$hasTrainerSelected = isset($_GET['select_trainer']) && $_GET['select_trainer'] !== '' ? $_GET['select_trainer'] : '';
+
+$sql = "SELECT * FROM memberships WHERE user_id = $userID";
+$memberships = mysqli_query($conn,$sql);
+$membership = mysqli_fetch_assoc($memberships);
+
+$type = $membership['type'];
+
+$sql = "SELECT * FROM trainers WHERE specialty = '$type'";
 
 $result = mysqli_query($conn, $sql);
 
@@ -25,101 +33,42 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   $select_trainer = $_POST['select_trainer'];
 
   $sql = "SELECT * FROM trainers WHERE trainer_id = $select_trainer";
-
-  $trainers = mysqli_query($conn,$sql);
-  $trainer = mysqli_fetch_assoc($trainers);
 }
+
+$trainers = mysqli_query($conn,$sql);
+$selectedTrainer = mysqli_fetch_assoc($trainers);
+
+$name = $selectedTrainer['name'];
+$specialty = $selectedTrainer['specialty'];
+$experience = $selectedTrainer['experience'];
+$hourly_rate = $selectedTrainer['hourly_rate'];
+$day_from = $selectedTrainer['day_from'];
+$day_to = $selectedTrainer['day_to'];
+$time_from = $selectedTrainer['time_from'];
+$time_to = $selectedTrainer['time_to'];
+$image = $selectedTrainer['image'];
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>PAP's Fitness Gym - Class Schedule</title>
-  </head>
-
-  <body style="background-color: black; position: relative;">
-  <header class="pt-16 pb-24 flex items-center px-52 justify-between">
-      <div class="w-24 h-24 overflow-hidden">
-        <img src="../../../public/images/logo.png" alt="Logo" class="w-full h-auto">
-      </div>
-
-      <p class="text-4xl font-bold text-[#fabf3b]">CLASS SCHEDULE</p>
-
+<div class="px-52 w-full flex flex-col items-center pb-16">
+  <div class="max-w-xl w-full flex flex-col space-y-8 items-start">
+    <div class="flex justify-end w-full">
       <button 
-        class="bg-[#fabf3b] px-5 py-1.5 text-black font-medium rounded-sm"
-        onclick="window.location.href='../../controllers/logoutController.php'"
-      >
-        Logout
-      </button>
-    </header>
-
-    <div class="px-52 w-full">
-      <div class="grid grid-cols-6 gap-x-10">
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='home.php'"
+          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm"
+          onclick="window.location.href='../schedule.php'"
         >
-          Home Page
+          Back
         </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='profile.php'"
-        >
-          Profile
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='equipment.php'"
-        >
-          Equipment
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='membership.php'"
-        >
-          Membership
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='schedule.php'"
-        >
-          Class Schedule
-        </button>
-
-        <button 
-          class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-          onclick="window.location.href='auth/login.php'"
-        >
-          Billing History
-        </button>
-      </div>
     </div>
 
-    <div class="px-52 w-full flex flex-col items-center py-16">
-      <div class="max-w-xl w-full flex flex-col space-y-8 items-start">
-        <div class="flex justify-end w-full">
-          <button 
-              class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm"
-              onclick="window.location.href='../schedule.php'"
-            >
-              Back
-            </button>
-        </div>
+    <div class="py-10 px-6 bg-[#fabf3b] flex flex-col items-center space-y-6 w-full">
+      <p class="text-3xl text-black font-bold">Class Schedule</p>
 
-        <div class="py-10 px-6 bg-[#fabf3b] flex flex-col items-center space-y-6 w-full">
-          <p class="text-3xl text-black font-bold">Class Schedule</p>
+      <?php if(empty($hasTrainerSelected)): ?>
+        <form action="create.php" class="space-y-6 flex flex-col w-full">
+          <div class="space-y-1.5 w-full">
+            <p class="text-sm text-black font-medium">Select Trainers</p>
 
-          <form action="create.php" class="space-y-6 flex flex-col w-full">
-            <div class="space-y-1.5 w-full">
-              <p class="text-sm text-black font-medium">Select Trainers</p>
-
+            <div class="flex items-center space-x-2">
               <select 
                 name="select_trainer"
                 class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
@@ -129,17 +78,88 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                   <option value="<?php echo $trainer['trainer_id'] ?>"><?php echo $trainer['name'] ?></option>
                 <?php endforeach; ?>
               </select>
+
+              <button 
+                class="bg-black px-5 py-2.5 rounded-lg text-white font-medium"
+                type="submit"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
+      <?php endif; ?>
+
+      <?php if(!empty($hasTrainerSelected)): ?>
+        <form action="../../../controllers/scheduleController.php" method="POST" class="w-full relative space-y-6">
+          <input type="hidden" name="trainer_id" value="<?php echo $hasTrainerSelected ?>">
+          <input type="hidden" name="user_id" value="<?php echo $userID ?>">
+
+          <div class="space-y-1.5 w-full flex flex-col items-center">
+            <?php if(!empty($hasTrainerSelected)): ?>
+              <div class="border border-black w-36 h-36 relative flex flex-col items-center justify-center relative overflow-hidden">
+                <?php if(!empty($image)): ?>
+                  <img src="<?php echo '../../' . $image; ?>" class="w-full h-auto object-cover">
+                <?php endif; ?>
+
+                <?php if(empty($image)): ?>
+                  <p class="text-base font-medium">N/A</p>
+                <?php endif; ?>
+              </div>
+            <?php endif; ?>
+
+            <p class="text-base font-medium">Trainer Profile</p>
+          </div>
+
+          <div class="space-y-1.5 w-full">
+            <p class="text-base font-medium">Class Name:</p>
+            <input 
+              name="name"
+              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-[#fabf3b] text-black placeholder-gray-600"
+              placeholder="Name"
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-y-4 items-center w-full">
+            <div class="space-y-1.5">
+              <p class="text-base font-medium">Trainer:</p>
+              <p class="text-base"><?php echo $name ?></p>
             </div>
 
-            <button 
-              class="bg-black px-5 py-2.5 rounded-lg text-white font-medium"
-              type="submit"
-            >
-              Submit
-            </button>
-          </form>
-        </div>
-      </div>
+            <div class="space-y-1.5">
+              <p class="text-base font-medium">Specialty:</p>
+              <p class="text-base"><?php echo $specialty ?></p>
+            </div>
+
+            <div class="space-y-1.5">
+              <p class="text-base font-medium">Experience:</p>
+              <p class="text-base"><?php echo $experience ?> year/s</p>
+            </div>
+
+            <div class="space-y-1.5">
+              <p class="text-base font-medium">Rate:</p>
+              <p class="text-base">P<?php echo $hourly_rate ?> per hour</p>
+            </div>
+
+            <div class="space-y-1.5">
+              <p class="text-base font-medium">Scheduled Days:</p>
+              <p class="text-base"><?php echo $day_from ?> to <?php echo $day_to ?></p>
+            </div>
+
+            <div class="space-y-1.5">
+              <p class="text-base font-medium">Scheduled Time:</p>
+              <p class="text-base"><?php echo $time_from ?> to <?php echo $time_to ?></p>
+            </div>
+          </div>
+
+          <button 
+            class="bg-black text-white justify-center w-full py-3 text-black font-medium rounded-lg"
+            name="create"
+          >
+            Submit
+          </button>
+        </form>
+      <?php endif; ?>
     </div>
-  </body>
-</html>
+  </div>
+</div>

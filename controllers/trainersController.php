@@ -71,12 +71,13 @@
     elseif(isset($_POST['delete'])){
       $trainer_id = $_POST['trainer_id'];
 
-      $sql = "DELETE FROM trainers WHERE trainer_id=$trainer_id";
+      $sql = "DELETE FROM trainers WHERE trainer_id = $trainer_id";
   
       if($conn->query($sql)){
         header("Location: ../pages/admin/trainers.php?message=Trainers Deleted Successfully");
+      } else {
+        echo "ERROR! Created unsuccessfully";
       }
-      echo "ERROR! Created unsuccessfully";
     }
   }
 ?>
