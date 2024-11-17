@@ -28,11 +28,16 @@ include('../../../layouts/admin.php');
           placeholder="Trainer Name"
         />
 
-        <input 
+        <select 
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md bg-black text-white"
           name="specialty"
-          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-          placeholder="Specialty"
-        />
+        >
+          <option value="0" selected>Select Specialty</option>
+          <option value="boxing">Boxing</option>
+          <option value="yoga">Yoga</option>
+          <option value="kick_boxing">Kick Boxing</option>
+          <option value="butangi_drop_down">Butangi Drop Down</option>
+        </select>
 
         <input 
           type="number"
