@@ -36,6 +36,12 @@ if ($result->num_rows > 0) {
   $row = $result->fetch_assoc();
   $membershipCount = $row['total'];
 }
+
+$sql = "SELECT * FROM memberships WHERE user_id = $userID";
+$memberships = mysqli_query($conn,$sql);
+$member = mysqli_fetch_assoc($memberships);
+
+$memberStatus = $member['status'];
 ?>
 
 <div class="px-52 w-full flex flex-col items-center py-16">
@@ -58,7 +64,38 @@ if ($result->num_rows > 0) {
     </div>
   <?php endif; ?>
 
-  <?php if($membershipCount > 0): ?>
+  <?php if($memberStatus === 'pending'): ?>
+    <div class="max-w-lg w-full rounded-lg bg-[#fabf3b] flex flex-col items-start px-6 py-4 space-y-8">
+      <p class="text-4xl font-semibold">Notice</p>
+
+      <div class="p-4 bg-black rounded-lg">
+        <p class="text-base text-white">
+          <?php if($memberStatus === 'pending'): ?>
+            Accessing this feature is reserved for our valued members. Complete your membership application and payment today to unlock full access and enjoy all the exclusive benefits we provide!
+          <?php endif; ?>
+
+          <?php if($memberStatus === 'renewable'): ?>
+            Accessing this feature is exclusive to our valued members. Your membership has expired—apply for a new one today to regain full access and enjoy all the benefits we offer!
+          <?php endif; ?>
+        </p>
+      </div>
+
+      <button 
+        class="bg-black px-5 py-4 text-xl text-white w-full font-medium rounded-lg"
+        onclick="window.location.href='membership.php'"
+      >
+        <?php if($memberStatus === 'pending'): ?>
+          Payment Pending
+        <?php endif; ?>
+
+        <?php if($memberStatus === 'renewable'): ?>
+          Renew Now
+        <?php endif; ?>
+      </button>
+    </div>
+  <?php endif; ?>
+
+  <?php if($memberStatus === 'active'): ?>
     <div class="max-w-4xl w-full flex flex-col space-y-8 items-start">
       <div class="flex justify-end w-full">
         <button 
@@ -117,7 +154,7 @@ if ($result->num_rows > 0) {
 
               <div class="space-y-1.5">
                 <p class="text-base font-medium">Scheduled Time:</p>
-                <p class="text-base"><?php echo $schedule['time_from'] ?> to <?php echo $schedule['time_to'] ?></p>
+                <p class="text-base"><?php echo date('g:i A', strtotime($schedule['time_from'])) ?> to <?php echo date('g:i A', strtotime($schedule['time_to'])) ?></p>
               </div>
             </div>
 
@@ -125,7 +162,7 @@ if ($result->num_rows > 0) {
               <input type="hidden" name="schedule_id" value="<?php echo $schedule['schedule_id']?>">
               <button 
                 class="text-black bg-inherit justify-center w-full py-3 text-lg font-medium rounded-lg"
-                name="delete"
+                name="user-delete"
               >
                 Cancel
               </button>

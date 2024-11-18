@@ -58,7 +58,8 @@ if ($result->num_rows > 0) {
               <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $trainer['experience'] ?></td>
               <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $trainer['hourly_rate'] ?></td>
               <td class="py-4 text-base text-left text-black indent-4 border-b border-black text-center">
-                <?php echo $trainer['day_from'] ?> - <?php echo $trainer['day_to'] ?> : <?php echo $trainer['time_from'] ?> <?php echo $trainer['time_to'] ?>
+                <?php echo $trainer['day_from'] ?> - <?php echo $trainer['day_to'] ?> : 
+                <?php echo date('g:i A', strtotime($trainer['time_from'])) . ' - ' . date('g:i A', strtotime($trainer['time_to']));?>
               </td>
               <td class="py-4 text-base text-center border-b border-l border-black">
                 <p>

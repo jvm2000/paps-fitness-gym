@@ -42,6 +42,7 @@ $gender = $user['gender'];
   >
     <input type="hidden" name="user_id" value="<?php echo $userID ?>">
     <input type="hidden" name="package_id" value="<?php echo $package_id ?>">
+    <input type="hidden" name="type" value="<?php echo $name ?>">
     <input type="hidden" name="status" value="pending">
     <input type="hidden" name="payment_status" value="pending">
     <input type="hidden" name="start_date">
@@ -80,20 +81,6 @@ $gender = $user['gender'];
           <p class="text-base font-medium">Amount:</p>
           <input name="amount" id="amount" class="text-base font-medium outline-none border-0 pointer-events-none bg-inherit" />
         </div>
-      </div>
-
-      <div class="space-y-1.5 w-full">
-        <p class="text-base font-medium">Service Type:</p>
-        <select 
-          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md bg-black text-white"
-          name="type"
-        >
-          <option value="0" selected>Select Service Type</option>
-          <option value="boxing">Boxing</option>
-          <option value="yoga">Yoga</option>
-          <option value="kick_boxing">Kick Boxing</option>
-          <option value="membership">Membership</option>
-        </select>
       </div>
 
       <div class="space-y-1.5 w-full">

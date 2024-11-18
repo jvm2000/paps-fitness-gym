@@ -23,6 +23,18 @@ $day_to = $trainer['day_to'] ;
 $time_from = date('H:i:s', strtotime($trainer['time_from']));
 $time_to = date('H:i:s', strtotime($trainer['time_to']));
 $image = $trainer['image'];
+
+$sql = "SELECT * FROM packages";
+
+$result = mysqli_query($conn, $sql);
+
+$packages = [];
+
+if ($result->num_rows > 0) {
+  while ($package = $result->fetch_assoc()) {
+    $packages[] = $package; 
+  }
+}
 ?>
 
 <div class="px-52 w-full flex flex-col items-center">
@@ -49,12 +61,18 @@ $image = $trainer['image'];
           value="<?php echo $name ?>"
         />
 
-        <input 
+        <select 
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md bg-black text-white"
           name="specialty"
-          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-          placeholder="Specialty"
-          value="<?php echo $specialty ?>"
-        />
+        >
+          <option value="0" selected>Select Specialty</option>
+          <?php foreach($packages as $package): ?>
+            <option 
+              value="<?php echo $package['name'] ?>"
+              <?php echo $package['name'] === $specialty ? 'selected' : ''; ?>
+            ><?php echo $package['name'] ?></option>
+          <?php endforeach; ?>  
+        </select>
 
         <input 
           type="number"

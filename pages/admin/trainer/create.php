@@ -1,10 +1,24 @@
 <?php
+include "../../../config/connect.php";
+
 $title = "Add Trainer";
 $pageHeader = "Add Trainer";
 $childView = __DIR__ . '/create.php';
 $noHeader = true;
 
 include('../../../layouts/admin.php');
+
+$sql = "SELECT * FROM packages";
+
+$result = mysqli_query($conn, $sql);
+
+$packages = [];
+
+if ($result->num_rows > 0) {
+  while ($package = $result->fetch_assoc()) {
+    $packages[] = $package; 
+  }
+}
 ?>
 
 <div class="px-52 w-full flex flex-col items-center">
@@ -19,7 +33,7 @@ include('../../../layouts/admin.php');
     </div>
 
     <div class="py-10 px-6 bg-[#fabf3b] flex flex-col items-center space-y-6 w-full">
-      <p class="text-3xl text-black font-bold">Equipment</p>
+      <p class="text-3xl text-black font-bold">Add Trainer</p>
 
       <form action="../../../controllers/trainersController.php" method="POST" class="space-y-6 flex flex-col w-full" enctype="multipart/form-data">
         <input 
@@ -33,10 +47,9 @@ include('../../../layouts/admin.php');
           name="specialty"
         >
           <option value="0" selected>Select Specialty</option>
-          <option value="boxing">Boxing</option>
-          <option value="yoga">Yoga</option>
-          <option value="kick_boxing">Kick Boxing</option>
-          <option value="membership">Membership</option>
+          <?php foreach($packages as $package): ?>
+            <option value="<?php echo $package['name'] ?>"><?php echo $package['name'] ?></option>
+          <?php endforeach; ?>  
         </select>
 
         <input 

@@ -41,6 +41,29 @@ if (is_array($memberships) && !empty($memberships) && $memberships[0]['expiratio
 
   $conn->query($renewable);
 }
+
+
+$membershipCount = 0;
+$sql = "SELECT COUNT(*) AS total FROM memberships WHERE user_id = $userID";
+
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  $row = $result->fetch_assoc();
+  $membershipCount = $row['total'];
+}
+
+$sql = "SELECT * FROM users WHERE user_id = $userID";
+$users = mysqli_query($conn,$sql);
+$user = mysqli_fetch_assoc($users);
+
+$first_name = $user['firstname'];
+$last_name = $user['lastname'];
+$email = $user['email'];
+$phone = $user['phone'];
+$gender = $user['gender'];
+
+$memberID = $membershipCount + 1;
 ?>
 
 <div class="w-full flex flex-col items-center py-24 space-y-12">
@@ -49,23 +72,95 @@ if (is_array($memberships) && !empty($memberships) && $memberships[0]['expiratio
   <p class="text-3xl font-bold text-[#fabf3b]">Affordable Membership</p>
 
   <?php if(empty($memberships)): ?>
-    <div class="max-w-7xl w-full grid grid-cols-3 gap-x-12 gap-y-6">
-      <?php foreach ($packages as $index => $package): ?>
-        <div class="bg-[#fabf3b] w-full px-4 flex flex-col items-center pt-6 pb-3 space-y-6 relative">
-          <p class="text-3xl font-bold z-[1] w-full bg-[#fabf3b] text-center"><?php echo $package['name'] ?></p>
+    <div class="max-w-2xl w-full flex flex-col items-start space-y-6 bg-[#fabf3b] px-6 py-4 rounded-lg">
+      <div class="flex items-center space-x-4">
+        <p class="text-xl font-semibold whitespace-nowrap">Membership ID:</p>
 
-          <p class="text-base font-medium text-center px-6 h-7">
-            <?php echo $package['description'] ?>
-          </p>
+        <input 
+          name="membership_id"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-[#fabf3b] text-black placeholder-gray-600"
+          value="<?php echo $memberID ?>"
+        />
+      </div>
 
-          <button 
-            class="text-yellow-300 bg-black px-10 py-1.5 text-black text-sm font-medium rounded-sm"
-            onclick="window.location.href='membership/create.php?package_id=<?php echo $package['package_id']?>'"
-          >
-            Join Now
-          </button>
+      <div class="flex flex-col items-start w-full space-y-6">
+        <div class="flex items-center space-x-4">
+          <p class="text-base font-medium">Full Name:</p>
+          <p class="text-base font-medium"><?php echo $first_name ?> <?php echo $last_name ?></p>
         </div>
-      <?php endforeach ?>
+
+        <div class="flex items-center space-x-4">
+          <p class="text-base font-medium">Contact Number:</p>
+          <p class="text-base font-medium"><?php echo $phone ?></p>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <p class="text-base font-medium">Email:</p>
+          <p class="text-base font-medium"><?php echo $email ?></p>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <p class="text-base font-medium">Gender:</p>
+          <p class="text-base font-medium"><?php echo $gender ?></p>
+        </div>
+
+        <div class="space-y-1.5 w-full">
+          <p class="text-base font-medium">Type of Service:</p>
+          <select 
+            class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md bg-black text-white"
+            name="service_type"
+          >
+            <option value="0" selected>Select Service Type</option>
+            <?php foreach($packages as $package):  ?>
+             <option value="<?php echo $package['name'] ?>"><?php echo $package['name'] ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+
+        <div class="space-y-1.5 w-full">
+          <p class="text-base font-medium">Membership Type:</p>
+          <select 
+            class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md bg-black text-white"
+            name="membership_type"
+            id="membership-type"
+          >
+            <option value="0" selected>Select Membership Type</option>
+            <option value="hourly_rate">Hourly</option>
+            <option value="daily_rate">Daily</option>
+            <option value="weekly_rate">Weekly</option>
+            <option value="monthly_rate">Monthly</option>
+            <option value="yearly_rate">Yearly</option>
+          </select>
+        </div>
+
+        <table class="w-full table-auto border border-black">
+          <thead>
+            <tr>
+              <th class="py-2 text-base border-b border-r border-black">Type of Service</th>
+              <th class="py-2 text-base border-b border-r border-black">Type of Membership</th>
+              <th class="py-2 text-base border-b border-r border-black">Expiry Date</th>
+              <th class="py-2 text-base border-b border-black">Amount</th>
+            </tr>
+
+            <tbody>
+              <tr>
+                <th class="py-2 text-base border-b border-r border-black">
+                  <div></div>
+                </th>
+                <th class="py-2 text-base border-b border-r border-black">
+                  <div></div>
+                </th>
+                <th class="py-2 text-base border-b border-r border-black">
+                  <div></div>
+                </th>
+                <th class="py-2 text-base border-b border-r border-black">
+                  <div></div>
+                </th>
+              </tr>
+            </tbody>
+          </thead>
+        </table>
+      </div>
     </div>
   <?php endif; ?>
 
@@ -82,11 +177,6 @@ if (is_array($memberships) && !empty($memberships) && $memberships[0]['expiratio
         <div class="space-y-1.5">
           <p class="text-base">Name:</p>
           <p class="text-base"><?php echo $memberships[0]['name'] ?></p>
-        </div>
-
-        <div class="space-y-1.5">
-          <p class="text-base">Type:</p>
-          <p class="text-base"><?php echo $memberships[0]['type'] ?></p>
         </div>
 
         <div class="space-y-1.5">
@@ -159,6 +249,20 @@ if (is_array($memberships) && !empty($memberships) && $memberships[0]['expiratio
             Active
           </button>
 
+          <button 
+            class="text-white bg-blue-600 justify-center w-full py-3 text-lg font-medium rounded-lg pointer-events-none disabled:bg-gray-500"
+            onclick="window.location.href='payment/renew.php?membership_id=<?php echo $memberships[0]['membership_id']?>'"
+            disabled="<?php if($memberships[0]['payment_status'] === 'renewable' && $memberships[0]['status'] === 'renewable') ?>"
+          >
+            <?php if($memberships[0]['payment_status'] === 'renewable' && $memberships[0]['status'] === 'renewable'): ?>
+              Renew
+            <?php endif ?>
+
+            <?php if($memberships[0]['payment_status'] !== 'renewable' && $memberships[0]['status'] !== 'renewable'): ?>
+              <div id="countdown">Loading...</div>
+            <?php endif ?>
+          </button>
+
           <form action='../../controllers/membershipController.php' method='POST'>
             <input type="hidden" name="membership_id" value="<?php echo $memberships[0]['membership_id']?>">
             <button 
@@ -169,14 +273,6 @@ if (is_array($memberships) && !empty($memberships) && $memberships[0]['expiratio
             </button>
           </form>
         </div>
-      <?php endif; ?>
-
-      <?php if($memberships[0]['payment_status'] === 'renewable' && $memberships[0]['status'] === 'renewable'): ?>
-        <button 
-          class="text-white bg-blue-600 justify-center w-full py-3 text-lg font-medium rounded-lg pointer-events-none"
-        >
-          Renewable
-        </button>
       <?php endif; ?>
     </div>
   <?php endif; ?>
@@ -217,4 +313,93 @@ if (is_array($memberships) && !empty($memberships) && $memberships[0]['expiratio
       expirationDateInput.value = formatDate(expirationDate);
     });
   });
+
+  const expirationDate = new Date("<?php echo $memberships[0]['expiration_date']; ?>");
+  const todayDate = new Date("<?php echo $dateToday; ?>");
+
+  function startCountdown(expirationDate) {
+    function updateCountdown() {
+        const now = new Date();
+        const remainingTime = expirationDate - now;
+
+        if (remainingTime <= 0) {
+            clearInterval(interval);
+            document.getElementById("countdown").textContent = "Membership expired";
+            return;
+        }
+
+        const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").textContent =
+            `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    const interval = setInterval(updateCountdown, 1000);
+    updateCountdown(); // Call immediately to avoid 1-second delay
+}
+
+if (expirationDate > todayDate) {
+    startCountdown(expirationDate);
+} else {
+    document.getElementById("countdown").textContent = "Membership expired";
+}
+
+const packageRates = {
+  hourly_rate: <?php echo $hourly_rate ?>,
+  daily_rate: <?php echo $daily_rate ?>,
+  weekly_rate: <?php echo $weekly_rate ?>,
+  monthly_rate: <?php echo $monthly_rate ?>,
+  yearly_rate: <?php echo $yearly_rate ?>
+};
+
+const today = new Date();
+
+const formattedDate = today.toISOString().split('T')[0];
+
+document.querySelector('input[name="start_date"]').value = formattedDate;
+document.querySelector('input[name="created_at"]').value = formattedDate;
+
+document.addEventListener("DOMContentLoaded", () => {
+  const selectElement = document.querySelector("select[name='membership_type']");
+  const typeService = document.querySelector("select[name='membership_type']").value;
+  const typeMembership = document.querySelector("select[name='membership_type']").value;
+  const hiddenInput = document.querySelector("input[name='expiration_date']");
+  const amountInput = document.getElementById('amount');
+
+  selectElement.addEventListener("change", () => {
+    const formattedToday = today.toISOString().split("T")[0];
+    hiddenInput.value = formattedToday;
+
+    const selectedValue = selectElement.value;
+
+    amountInput.value = packageRates[selectedValue] || '';
+
+    let expirationDate = new Date(today);
+
+    switch (selectedValue) {
+      case "hourly_rate":
+        expirationDate = new Date(today.setDate(today.getDate()));
+        break;
+      case "daily_rate":
+        expirationDate = new Date(today.setDate(today.getDate() + 1));
+        break;
+      case "weekly_rate":
+        expirationDate = new Date(today.setDate(today.getDate() + 7));
+        break;
+      case "monthly_rate":
+        expirationDate = new Date(today.setMonth(today.getMonth() + 1));
+        break;
+      case "yearly_rate":
+        expirationDate = new Date(today.setFullYear(today.getFullYear() + 1));
+        break;
+      default:
+        expirationDate = '';
+    }
+
+    hiddenInput.value = expirationDate.toISOString().split("T")[0];
+  });
+});
 </script>

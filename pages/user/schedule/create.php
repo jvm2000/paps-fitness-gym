@@ -11,6 +11,16 @@ include('../../../layouts/user.php');
 $userID = $_SESSION['user_id'];
 $hasTrainerSelected = isset($_GET['select_trainer']) && $_GET['select_trainer'] !== '' ? $_GET['select_trainer'] : '';
 
+$name = "";
+$specialty = "";
+$experience = "";
+$hourly_rate = "";
+$day_from = "";
+$day_to = "";
+$time_from = "";
+$time_to = "";
+$image = "";
+
 $sql = "SELECT * FROM memberships WHERE user_id = $userID";
 $memberships = mysqli_query($conn,$sql);
 $membership = mysqli_fetch_assoc($memberships);
@@ -27,6 +37,8 @@ if ($result->num_rows > 0) {
   while ($trainer = $result->fetch_assoc()) {
     $trainers[] = $trainer; 
   }
+} else {
+  echo "No trainees are matched.";
 }
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -34,7 +46,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $sql = "SELECT * FROM trainers WHERE trainer_id = $select_trainer";
 }
-
 $trainers = mysqli_query($conn,$sql);
 $selectedTrainer = mysqli_fetch_assoc($trainers);
 
@@ -44,8 +55,8 @@ $experience = $selectedTrainer['experience'];
 $hourly_rate = $selectedTrainer['hourly_rate'];
 $day_from = $selectedTrainer['day_from'];
 $day_to = $selectedTrainer['day_to'];
-$time_from = $selectedTrainer['time_from'];
-$time_to = $selectedTrainer['time_to'];
+$time_from = date('g:i A', strtotime($selectedTrainer['time_from']));
+$time_to = date('g:i A', strtotime($selectedTrainer['time_to']));
 $image = $selectedTrainer['image'];
 ?>
 

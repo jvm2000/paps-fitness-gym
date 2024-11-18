@@ -52,5 +52,17 @@
         echo "ERROR! Created unsuccessfully";
       }
     }
+
+    elseif(isset($_POST['user-delete'])){
+      $schedule_id = $_POST['schedule_id'];
+
+      $sql = "DELETE FROM schedules WHERE schedule_id = $schedule_id";
+  
+      if($conn->query($sql)){
+        header("Location: ../pages/user/schedule.php?message=Schedule Deleted Successfully");
+      } else {
+        echo "ERROR! Created unsuccessfully";
+      }
+    }
   }
 ?>
