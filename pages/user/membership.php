@@ -109,10 +109,13 @@ $memberID = $membershipCount + 1;
           <select 
             class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md bg-black text-white"
             name="service_type"
+            id="serviceTypeSelect"
           >
             <option value="0" selected>Select Service Type</option>
-            <?php foreach($packages as $package):  ?>
-             <option value="<?php echo $package['name'] ?>"><?php echo $package['name'] ?></option>
+            <?php foreach($packages as $package): ?>
+              <option value="<?php echo htmlspecialchars($package['name']); ?>">
+                  <?php echo htmlspecialchars($package['name']); ?>
+              </option>
             <?php endforeach; ?>
           </select>
         </div>
@@ -121,8 +124,8 @@ $memberID = $membershipCount + 1;
           <p class="text-base font-medium">Membership Type:</p>
           <select 
             class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md bg-black text-white"
-            name="membership_type"
-            id="membership-type"
+            name="type"
+            id="membershipTypeSelect"
           >
             <option value="0" selected>Select Membership Type</option>
             <option value="hourly_rate">Hourly</option>
@@ -144,18 +147,18 @@ $memberID = $membershipCount + 1;
 
             <tbody>
               <tr>
-                <th class="py-2 text-base border-b border-r border-black">
-                  <div></div>
-                </th>
-                <th class="py-2 text-base border-b border-r border-black">
-                  <div></div>
-                </th>
-                <th class="py-2 text-base border-b border-r border-black">
-                  <div></div>
-                </th>
-                <th class="py-2 text-base border-b border-r border-black">
-                  <div></div>
-                </th>
+                <td class="py-2 text-base border-b border-r border-black">
+                  <p class="text-base indent-4" id="outputService">N/A</p>
+                </td>
+                <td class="py-2 text-base border-b border-r border-black">
+                  <p class="text-base indent-4" id="outputmembership">N/A</p>
+                </td>
+                <td class="py-2 text-base border-b border-r border-black">
+                  <input type="text" name="expiration_date" class="bg-inherit text-base w-28 text-black indent-4 pointer-events-none" value="N/A">
+                </td>
+                <td class="py-2 text-base border-b border-r border-black">
+                  <input type="text" id="amount" name="amount" class="bg-inherit text-base w-28 text-black indent-4 pointer-events-none" value="N/A">
+                </td>
               </tr>
             </tbody>
           </thead>
@@ -279,93 +282,30 @@ $memberID = $membershipCount + 1;
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const packageElements = document.querySelectorAll('form');
-    
-    packageElements.forEach((form, index) => {
-      const startDateInput = document.getElementById(`start-date-${index}`);
-      const expirationDateInput = document.getElementById(`expiration-date-${index}`);
-      
-      let membershipType = '';
-      if (form.dataset.dailyRate) {
-        membershipType = 'daily';
-      } else if (form.dataset.monthlyRate) {
-        membershipType = 'monthly';
-      } else if (form.dataset.hourlyRate) {
-        membershipType = 'hourly';
-      }
+const service = document.getElementById('serviceTypeSelect');
+const outputElement = document.getElementById('outputService');
 
-      function formatDate(date) {
-        return date.toISOString().split('T')[0];
-      }
+service.addEventListener('change', () => {
+  const selectedValue = service.value;
 
-      const today = new Date();
-      startDateInput.value = formatDate(today);
+  outputElement.textContent = `${selectedValue}`;
+});
 
-      let expirationDate = new Date(today);
+const membership = document.getElementById('membershipTypeSelect');
+const outputMembership = document.getElementById('outputmembership');
 
-      if (membershipType === "daily") {
-        expirationDate.setDate(expirationDate.getDate() + 1);
-      } else if (membershipType === "monthly") {
-        expirationDate.setDate(expirationDate.getDate() + 30);
-      }
+membership.addEventListener('change', () => {
+  const selectedValue = membership.value;
 
-      expirationDateInput.value = formatDate(expirationDate);
-    });
-  });
-
-  const expirationDate = new Date("<?php echo $memberships[0]['expiration_date']; ?>");
-  const todayDate = new Date("<?php echo $dateToday; ?>");
-
-  function startCountdown(expirationDate) {
-    function updateCountdown() {
-        const now = new Date();
-        const remainingTime = expirationDate - now;
-
-        if (remainingTime <= 0) {
-            clearInterval(interval);
-            document.getElementById("countdown").textContent = "Membership expired";
-            return;
-        }
-
-        const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-        document.getElementById("countdown").textContent =
-            `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    const interval = setInterval(updateCountdown, 1000);
-    updateCountdown(); // Call immediately to avoid 1-second delay
-}
-
-if (expirationDate > todayDate) {
-    startCountdown(expirationDate);
-} else {
-    document.getElementById("countdown").textContent = "Membership expired";
-}
-
-const packageRates = {
-  hourly_rate: <?php echo $hourly_rate ?>,
-  daily_rate: <?php echo $daily_rate ?>,
-  weekly_rate: <?php echo $weekly_rate ?>,
-  monthly_rate: <?php echo $monthly_rate ?>,
-  yearly_rate: <?php echo $yearly_rate ?>
-};
+  outputMembership.textContent = `${selectedValue}`;
+});
 
 const today = new Date();
 
 const formattedDate = today.toISOString().split('T')[0];
 
-document.querySelector('input[name="start_date"]').value = formattedDate;
-document.querySelector('input[name="created_at"]').value = formattedDate;
-
 document.addEventListener("DOMContentLoaded", () => {
-  const selectElement = document.querySelector("select[name='membership_type']");
-  const typeService = document.querySelector("select[name='membership_type']").value;
-  const typeMembership = document.querySelector("select[name='membership_type']").value;
+  const selectElement = document.querySelector("select[name='type']");
   const hiddenInput = document.querySelector("input[name='expiration_date']");
   const amountInput = document.getElementById('amount');
 
@@ -373,13 +313,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const formattedToday = today.toISOString().split("T")[0];
     hiddenInput.value = formattedToday;
 
+    const expiryDate = selectElement.value;
+
     const selectedValue = selectElement.value;
 
     amountInput.value = packageRates[selectedValue] || '';
 
     let expirationDate = new Date(today);
 
-    switch (selectedValue) {
+    switch (expiryDate) {
       case "hourly_rate":
         expirationDate = new Date(today.setDate(today.getDate()));
         break;
@@ -401,5 +343,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     hiddenInput.value = expirationDate.toISOString().split("T")[0];
   });
+});
+
+var packageSelected = null;
+
+let packageRates = {
+  hourly_rate: '',
+  daily_rate: '',
+  weekly_rate: '',
+  monthly_rate: '',
+  yearly_rate: ''
+};
+
+document.getElementById('serviceTypeSelect').addEventListener('change', function() {
+  const packageName = this.value;
+
+  if (packageName !== '0') {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'membership_fetch.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          packageSelected = JSON.parse(xhr.responseText);
+
+          packageRates = {
+            hourly_rate: packageSelected['hourly_rate'],
+            daily_rate: packageSelected['daily_rate'],
+            weekly_rate: packageSelected['weekly_rate'],
+            monthly_rate: packageSelected['monthly_rate'],
+            yearly_rate: packageSelected['yearly_rate']
+          };
+          console.log(packageRates)
+        }
+    };
+    xhr.send('packageName=' + encodeURIComponent(packageName));
+  }
 });
 </script>
