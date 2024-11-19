@@ -90,10 +90,10 @@ $dateToday = date("Y-m-d");
 
                   <button 
                     class="text-white bg-red-600 justify-center py-1.5 px-2 text-xs font-medium rounded-lg disabled:bg-gray-500"
-                    onclick="window.location.href='payment/renew.php?membership_id=<?php echo $memberships[0]['membership_id']?>'"
+                    onclick="window.location.href='payment/renew.php?membership_id=<?php echo $membership['membership_id']?>'"
                     <?php echo ($membership['expiration_date'] !== $dateToday) ? 'disabled' : ''; ?>
                   >
-                    Renew
+                    <?php echo ($membership['expiration_date'] !== $dateToday) ? 'Not Renewable yet' : 'Renew'; ?>
                   </button>
 
 

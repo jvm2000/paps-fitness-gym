@@ -3,7 +3,7 @@ include "../../../config/connect.php";
 
 $title = "Renew Membership Payment";
 $pageHeader = "Renew Membership Payment";
-$childView = __DIR__ . '/create.php';
+$childView = __DIR__ . '/renew.php';
 $noHeader = true;
 
 include('../../../layouts/user.php');
@@ -19,7 +19,7 @@ $name = $membership['name'];
 $amount = $membership['amount'];
 ?>
 
-<div class="px-52 w-full flex flex-col items-center">
+<div class="px-52 w-full flex flex-col items-center pb-16">
   <form 
     action="../../../controllers/paymentController.php" 
     method="POST"
