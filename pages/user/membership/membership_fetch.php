@@ -1,5 +1,5 @@
 <?php
-include "../../config/connect.php";
+include "../../../config/connect.php";
 
 if (isset($_POST['packageName'])) {
     $packageName = $_POST['packageName'];
