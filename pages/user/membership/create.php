@@ -145,17 +145,22 @@ if ($result->num_rows > 0) {
         </thead>
       </table>
 
-      <div class="space-y-1.5 w-full">
-        <p class="text-base font-medium">With Coach [Y/N]?</p>
+      <div class="flex items-center w-full justify-between">
+        <div class="flex items-center space-x-4">
+          <p class="text-xl font-semibold whitespace-nowrap">Coach Name:</p>
 
-        <div class="flex items-center w-full justify-between">
-          <div class="flex items-center space-x-4">
-            <p class="text-xl font-semibold whitespace-nowrap">Coach Name:</p>
+          <input 
+            name="coach"
+            class="w-full focus:ring-0 focus:outline-none border-b border-black text-xl text-black bg-[#fabf3b] text-black placeholder-gray-600"
+          />
+        </div>
 
-            <input 
-              name="coach"
-              class="w-full focus:ring-0 focus:outline-none border-b border-black text-xl text-black bg-[#fabf3b] text-black placeholder-gray-600"
-            />
+        <div class="flex items-center space-x-4">
+          <div 
+            class="bg-black text-yellow-300 px-5 py-1.5 text-black font-medium rounded-sm cursor-pointer"
+            onclick="window.location.href='../membership.php'"
+          >
+            Back
           </div>
 
           <button 
