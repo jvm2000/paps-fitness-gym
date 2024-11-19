@@ -35,7 +35,7 @@ $amount = $membership['amount'];
 
     <div class="flex flex-col items-start max-w-full w-full space-y-6">
       <div class="space-y-1.5 w-full">
-        <p class="text-base font-medium">Email:</p>
+        <p class="text-base font-medium">Email (optional)</p>
         <input 
           name="email"
           class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-[#fabf3b] text-black placeholder-gray-600"

@@ -7,14 +7,14 @@
   if($_SERVER["REQUEST_METHOD"] == "POST"){
     //Create
     if(isset($_POST['create'])){
-      $email = $_POST['email'];
+      $email = $_POST['email'] ?? null;
       $transaction_type = $_POST['transaction_type'];
       $status = $_POST['status'];
       $method = $_POST['method'];
       $total_paid = $_POST['total_paid'];
       $date_paid = $_POST['date_paid'];
       
-      if (empty($email) || empty($transaction_type) || empty($status) || empty($method) || empty($total_paid) || empty($date_paid)) {
+      if (empty($transaction_type) || empty($status) || empty($method) || empty($total_paid) || empty($date_paid)) {
         header("Location: ../pages/user/payment/create.php?message=Please fill in all fields.&type=error");
         exit();
       }
@@ -92,14 +92,14 @@
     }
 
     if(isset($_POST['renew'])){
-      $email = $_POST['email'];
+      $email = $_POST['email'] ?? null;
       $transaction_type = $_POST['transaction_type'];
       $status = $_POST['status'];
       $method = $_POST['method'];
       $total_paid = $_POST['total_paid'];
       $date_paid = $_POST['date_paid'];
       
-      if (empty($email) || empty($transaction_type) || empty($status) || empty($method) || empty($total_paid) || empty($date_paid)) {
+      if (empty($transaction_type) || empty($status) || empty($method) || empty($total_paid) || empty($date_paid)) {
         header("Location: ../pages/user/payment/create.php?message=Please fill in all fields.&type=error");
         exit();
       }

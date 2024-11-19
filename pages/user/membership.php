@@ -72,7 +72,18 @@ $memberID = $membershipCount + 1;
   <p class="text-3xl font-bold text-[#fabf3b]">Affordable Membership</p>
 
   <?php if(empty($memberships)): ?>
-    <div class="max-w-2xl w-full flex flex-col items-start space-y-6 bg-[#fabf3b] px-6 py-4 rounded-lg">
+    <form 
+      action="../../controllers/membershipController.php" 
+      method="POST"
+      class="max-w-2xl w-full flex flex-col items-start space-y-6 bg-[#fabf3b] px-6 py-4 rounded-lg"
+    >
+      <input type="hidden" name="user_id" value="<?php echo $userID ?>">
+      <input type="hidden" name="package_id" value="">
+      <input type="hidden" name="status" value="pending">
+      <input type="hidden" name="payment_status" value="pending">
+      <input type="hidden" name="start_date">
+      <input type="hidden" name="created_at">
+      
       <div class="flex items-center space-x-4">
         <p class="text-xl font-semibold whitespace-nowrap">Membership ID:</p>
 
@@ -163,8 +174,31 @@ $memberID = $membershipCount + 1;
             </tbody>
           </thead>
         </table>
+
+        <div class="space-y-1.5 w-full">
+          <p class="text-base font-medium">With Coach [Y/N]?</p>
+
+          <div class="flex items-center w-full justify-between">
+            <div class="flex items-center space-x-4">
+              <p class="text-xl font-semibold whitespace-nowrap">Coach Name:</p>
+
+              <input 
+                name="coach"
+                class="w-full focus:ring-0 focus:outline-none border-b border-black text-xl text-black bg-[#fabf3b] text-black placeholder-gray-600"
+              />
+            </div>
+
+            <button 
+              class="bg-black text-yellow-300 px-5 py-1.5 text-black font-medium rounded-sm"
+              name="create"
+              type="submit"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </form>
   <?php endif; ?>
 
   <?php if(!empty($memberships)): ?>
@@ -178,8 +212,13 @@ $memberID = $membershipCount + 1;
 
       <div class="w-full grid grid-cols-2 gap-y-4">
         <div class="space-y-1.5">
-          <p class="text-base">Name:</p>
-          <p class="text-base"><?php echo $memberships[0]['name'] ?></p>
+          <p class="text-base">Service Type:</p>
+          <p class="text-base"><?php echo $memberships[0]['membership_id'] ?></p>
+        </div>
+
+        <div class="space-y-1.5">
+          <p class="text-base">Service Type:</p>
+          <p class="text-base"><?php echo $memberships[0]['type'] ?></p>
         </div>
 
         <div class="space-y-1.5">
@@ -303,6 +342,9 @@ membership.addEventListener('change', () => {
 const today = new Date();
 
 const formattedDate = today.toISOString().split('T')[0];
+
+document.querySelector('input[name="start_date"]').value = formattedDate;
+document.querySelector('input[name="created_at"]').value = formattedDate;
 
 document.addEventListener("DOMContentLoaded", () => {
   const selectElement = document.querySelector("select[name='type']");
