@@ -321,6 +321,42 @@ $memberID = $membershipCount + 1;
 </div>
 
 <script>
+const expirationDateRaw = "<?php echo $memberships[0]['expiration_date'] ?? ''; ?>";
+const expirationDate = expirationDateRaw ? new Date(expirationDateRaw) : null;
+const todayDate = new Date("<?php echo $dateToday; ?>");
+
+function startCountdown(expirationDate) {
+  function updateCountdown() {
+    const now = new Date();
+    const remainingTime = expirationDate - now;
+
+    if (remainingTime <= 0) {
+      clearInterval(interval);
+      document.getElementById("countdown").textContent = "Membership expired";
+      return;
+    }
+
+    const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").textContent =
+      `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  const interval = setInterval(updateCountdown, 1000);
+  updateCountdown();
+}
+
+if (expirationDate > todayDate) {
+    startCountdown(expirationDate);
+} else {
+    document.getElementById("countdown").textContent = "Membership expired";
+}
+</script>
+
+<script>
 const service = document.getElementById('serviceTypeSelect');
 const outputElement = document.getElementById('outputService');
 

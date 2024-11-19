@@ -36,6 +36,7 @@ if ($result->num_rows > 0) {
             <th class="py-4 border-b border-r border-black">Expiration Date</th>
             <th class="py-4 border-b border-r border-black">Status</th>
             <th class="py-4 border-b border-r border-black">Payment Status</th>
+            <th class="py-4 border-b border-r border-black">Coach Requested</th>
             <th class="py-4 border-b border-black">Actions</th>
           </tr>
         </thead>
@@ -53,6 +54,7 @@ if ($result->num_rows > 0) {
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['expiration_date'] ?></td>
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['status'] ?></td>
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['payment_status'] ?></td>
+              <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['coach'] ?></td>
               <td class="py-4 text-base text-center border-b border-black">
                 <p>
                   <a href="membership/edit.php?membership_id=<?php echo $membership['membership_id']?>">Edit</a> 
