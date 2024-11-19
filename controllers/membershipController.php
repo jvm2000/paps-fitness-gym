@@ -4,7 +4,6 @@
   if($_SERVER["REQUEST_METHOD"] == "POST"){
     //Create
     if(isset($_POST['create'])){
-      $membership_id = $_POST['membership_id'];
       $user_id = $_POST['user_id'];
       $type = $_POST['type'];
       $service_type = $_POST['service_type'];
@@ -16,13 +15,13 @@
       $coach = $_POST['coach'] ?? null;
       $created_at = $_POST['created_at'];
 
-      if (empty($membership_id) || empty($user_id) || empty($type) || empty($service_type) || empty($start_date) || empty($expiration_date) || empty($amount) || empty($status) || empty($payment_status)) {
+      if (empty($user_id) || empty($type) || empty($service_type) || empty($start_date) || empty($expiration_date) || empty($amount) || empty($status) || empty($payment_status)) {
         header("Location: ../pages/user/membership.php?message=Please fill in all fields.&type=error");
         exit();
       }
 
-      $sql = "INSERT INTO memberships (membership_id, user_id, type, service_type, start_date, expiration_date, amount, status, payment_status, coach, created_at) 
-              VALUES ('$membership_id', '$user_id', '$type', '$service_type', '$start_date', '$expiration_date', '$amount', '$status', '$payment_status', '$coach', '$created_at')";
+      $sql = "INSERT INTO memberships (user_id, type, service_type, start_date, expiration_date, amount, status, payment_status, coach, created_at) 
+              VALUES ('$user_id', '$type', '$service_type', '$start_date', '$expiration_date', '$amount', '$status', '$payment_status', '$coach', '$created_at')";
 
       if($conn->query($sql)){
         header("Location: ../pages/user/membership.php?message=Membership Submitted Successfully");

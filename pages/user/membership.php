@@ -87,11 +87,7 @@ $memberID = $membershipCount + 1;
       <div class="flex items-center space-x-4">
         <p class="text-xl font-semibold whitespace-nowrap">Membership ID:</p>
 
-        <input 
-          name="membership_id"
-          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-[#fabf3b] text-black placeholder-gray-600"
-          value="<?php echo $memberID ?>"
-        />
+        <div class="border-b text-xl border-black w-24"><?php echo $memberID ?></div>
       </div>
 
       <div class="flex flex-col items-start w-full space-y-6">
