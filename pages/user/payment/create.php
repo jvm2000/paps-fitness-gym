@@ -50,6 +50,7 @@ $amount = $membership['amount'];
           class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-white bg-black text-black"
         >
           <option value="gcash" selected>GCash</option>
+          <option value="walkin" selected>Walk In</option>
         </select>
       </div>
 
