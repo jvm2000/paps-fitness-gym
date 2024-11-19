@@ -21,13 +21,7 @@ $time_from = "";
 $time_to = "";
 $image = "";
 
-$sql = "SELECT * FROM memberships WHERE user_id = $userID";
-$memberships = mysqli_query($conn,$sql);
-$membership = mysqli_fetch_assoc($memberships);
-
-$type = $membership['service_type'];
-
-$sql = "SELECT * FROM trainers WHERE specialty = '$type'";
+$sql = "SELECT * FROM trainers";
 
 $result = mysqli_query($conn, $sql);
 
