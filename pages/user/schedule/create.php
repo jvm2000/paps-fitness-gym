@@ -25,7 +25,7 @@ $sql = "SELECT * FROM memberships WHERE user_id = $userID";
 $memberships = mysqli_query($conn,$sql);
 $membership = mysqli_fetch_assoc($memberships);
 
-$type = $membership['type'];
+$type = $membership['service_type'];
 
 $sql = "SELECT * FROM trainers WHERE specialty = '$type'";
 

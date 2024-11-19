@@ -31,6 +31,7 @@ if ($result->num_rows > 0) {
             <th class="py-4 border-b border-r border-black">Email</th>
             <th class="py-4 border-b border-r border-black">Phone</th>
             <th class="py-4 border-b border-r border-black">Membership Type</th>
+            <th class="py-4 border-b border-r border-black">Service Type</th>
             <th class="py-4 border-b border-r border-black">Start Date</th>
             <th class="py-4 border-b border-r border-black">Expiration Date</th>
             <th class="py-4 border-b border-r border-black">Status</th>
@@ -46,7 +47,8 @@ if ($result->num_rows > 0) {
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['firstname'] . ' ' . $membership['lastname'] ?></td>
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['email'] ?></td>
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['phone'] ?></td>
-              <td class="py-4 text-base text-center border-b border-r border-black capitalize"><?php echo $membership['type'] ?></td>
+              <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['type'] ?></td>
+              <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['service_type'] ?></td>
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['start_date'] ?></td>
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['expiration_date'] ?></td>
               <td class="py-4 text-base text-center border-b border-r border-black"><?php echo $membership['status'] ?></td>
