@@ -36,8 +36,6 @@
           </button>
 
           <div class="flex flex-col items-center space-y-2">
-            <p class="text-[#fabf3b] text-sm cursor-pointer">Forgot Password?</p>
-
             <p class="text-[#fabf3b] text-sm">
               Don't have an account? 
               <span 

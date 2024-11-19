@@ -49,7 +49,10 @@
           Get Started
         </button>
 
-        <button class="bg-[#f49e2b] px-6 py-2.5 text-black text-xl font-medium rounded-lg font-medium">
+        <button 
+          class="bg-[#f49e2b] px-6 py-2.5 text-black text-xl font-medium rounded-lg font-medium"
+          onclick="window.location.href='pages/auth/login.php'"
+        >
           Login
         </button>
       </div>
