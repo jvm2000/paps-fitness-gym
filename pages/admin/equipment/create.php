@@ -38,7 +38,7 @@ include('../../../layouts/admin.php');
           type="number"
           name="quantity"
           class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-          placeholder="Quantity"
+          placeholder="Stock"
         />
 
         <select 

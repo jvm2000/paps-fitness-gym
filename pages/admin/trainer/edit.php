@@ -15,13 +15,11 @@ $trainers = mysqli_query($conn,$sql);
 $trainer = mysqli_fetch_assoc($trainers);
 
 $name = $trainer['name'];
+$age = $trainer['age'];
+$gender = $trainer['gender'];
+$address = $trainer['address'];
+$contact = $trainer['contact'];
 $specialty = $trainer['specialty'];
-$experience = $trainer['experience'];
-$hourly_rate = $trainer['hourly_rate'];
-$day_from = $trainer['day_from'] ;
-$day_to = $trainer['day_to'] ;
-$time_from = date('H:i:s', strtotime($trainer['time_from']));
-$time_to = date('H:i:s', strtotime($trainer['time_to']));
 $image = $trainer['image'];
 
 $sql = "SELECT * FROM packages";
@@ -61,6 +59,30 @@ if ($result->num_rows > 0) {
           value="<?php echo $name ?>"
         />
 
+        <input 
+          name="age"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+          placeholder="Age"
+          value="<?php echo $age ?>"
+        />
+
+        <select 
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md bg-black text-white"
+          name="gender"
+        >
+          <option value="0" selected>Select Gender</option>
+          <option value="male" <?php echo $gender === 'male' ? 'selected' : ''; ?>>Male</option>
+          <option value="female" <?php echo $gender === 'female' ? 'selected' : ''; ?>>Female</option>
+          <option value="others" <?php echo $gender === 'others' ? 'selected' : ''; ?>>Others</option>
+        </select>
+
+        <input 
+          name="address"
+          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
+          placeholder="Address"
+          value="<?php echo $address ?>"
+        />
+
         <select 
           class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md bg-black text-white"
           name="specialty"
@@ -75,70 +97,11 @@ if ($result->num_rows > 0) {
         </select>
 
         <input 
-          type="number"
-          name="experience"
+          name="contact"
           class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-          placeholder="Experience"
-          value="<?php echo $experience ?>"
+          placeholder="Contact #"
+          value="<?php echo $contact ?>"
         />
-
-        <input 
-          type="number"
-          name="hourly_rate"
-          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-          placeholder="Hourly Rate"
-          value="<?php echo $hourly_rate ?>"
-        />
-
-        <div class="relative grid grid-cols-2 items-center gap-x-1">
-          <select 
-            name="day_from"
-            class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-          >
-            <option value="monday" <?php echo $day_from === 'monday' ? 'selected' : ''; ?>>Monday</option>
-            <option value="tuesday" <?php echo $day_from === 'tuesday' ? 'selected' : ''; ?>>Tuesday</option>
-            <option value="wednesday" <?php echo $day_from === 'wednesday' ? 'selected' : ''; ?>>Wednesday</option>
-            <option value="thursday" <?php echo $day_from === 'thursday' ? 'selected' : ''; ?>>Thursday</option>
-            <option value="friday" <?php echo $day_from === 'friday' ? 'selected' : ''; ?>>Friday</option>
-            <option value="saturday" <?php echo $day_from === 'saturday' ? 'selected' : ''; ?>>Saturday</option>
-            <option value="sunday" <?php echo $day_from === 'sunday' ? 'selected' : ''; ?>>Sunday</option>
-          </select>
-
-          <select 
-            name="day_to"
-            class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-          >
-            <option value="monday" <?php echo $day_to === 'monday' ? 'selected' : ''; ?>>Monday</option>
-            <option value="tuesday" <?php echo $day_to === 'tuesday' ? 'selected' : ''; ?>>Tuesday</option>
-            <option value="wednesday" <?php echo $day_to === 'wednesday' ? 'selected' : ''; ?>>Wednesday</option>
-            <option value="thursday" <?php echo $day_to === 'thursday' ? 'selected' : ''; ?>>Thursday</option>
-            <option value="friday" <?php echo $day_to === 'friday' ? 'selected' : ''; ?>>Friday</option>
-            <option value="saturday" <?php echo $day_to === 'saturday' ? 'selected' : ''; ?>>Saturday</option>
-            <option value="sunday" <?php echo $day_to === 'sunday' ? 'selected' : ''; ?>>Sunday</option>
-          </select>
-        </div>
-
-        <div class="relative grid grid-cols-2 items-center gap-x-1">
-          <div class="relative flex items-center">
-            <input 
-              type="time"
-              name="time_from"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base indent-6 rounded-md text-black bg-black text-white"
-              value="<?php echo $time_from ?>"
-            />
-            <p class="absolute left-4 text-white">F:</p>
-          </div>
-
-          <div class="relative flex items-center">
-            <input 
-              type="time"
-              name="time_to"
-              class="w-full px-4 py-2.5 ring-[1px] ring-black text-base indent-6 rounded-md text-black bg-black text-white"
-              value="<?php echo $time_to ?>"
-            />
-            <p class="absolute left-4 text-white">T:</p>
-          </div>
-        </div>
 
         <div 
           class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white min-h-24 max-h-full flex items-center justify-center" 

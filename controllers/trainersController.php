@@ -5,15 +5,13 @@
     //Create
     if(isset($_POST['create'])){
       $name = $_POST['name'];
+      $age = $_POST['age'];
+      $gender = $_POST['gender'];
+      $address = $_POST['address'];
+      $contact = $_POST['contact'];
       $specialty = $_POST['specialty'];
-      $experience = $_POST['experience'];
-      $hourly_rate = $_POST['hourly_rate'];
-      $day_from = $_POST['day_from'];
-      $day_to = $_POST['day_to'];
-      $time_from = $_POST['time_from'];
-      $time_to = $_POST['time_to'];
 
-      if (empty($name) || empty($specialty) || empty($experience) || empty($hourly_rate) || empty($day_from) || empty($day_to) || empty($time_from) || empty($time_to)) {
+      if (empty($name) || empty($age) || empty($gender) || empty($address) || empty($contact) || empty($specialty)) {
         header("Location: ../pages/admin/trainer/create.php?message=Please fill in all fields.&type=error");
         exit();
       }
@@ -35,7 +33,7 @@
         }
       }
 
-      $sql = "INSERT INTO trainers (name, specialty, experience, hourly_rate, day_from, day_to, time_from, time_to, image) VALUES ('$name', '$specialty', '$experience', '$hourly_rate', '$day_from', '$day_to', '$time_from', '$time_to', '$image')";
+      $sql = "INSERT INTO trainers (name, age, gender, address, contact, specialty) VALUES ('$name', '$age', '$gender', '$address', '$contact', '$specialty')";
 
       if($conn->query($sql)){
         header("Location: ../pages/admin/trainers.php?message=Trainer Created Successfully");
@@ -46,20 +44,18 @@
     elseif(isset($_POST['update'])){
       $trainer_id = $_POST['trainer_id'];
       $name = $_POST['name'];
+      $age = $_POST['age'];
+      $gender = $_POST['gender'];
+      $address = $_POST['address'];
+      $contact = $_POST['contact'];
       $specialty = $_POST['specialty'];
-      $experience = $_POST['experience'];
-      $hourly_rate = $_POST['hourly_rate'];
-      $day_from = $_POST['day_from'];
-      $day_to = $_POST['day_to'];
-      $time_from = $_POST['time_from'];
-      $time_to = $_POST['time_to'];
 
-      if (empty($name) || empty($specialty) || empty($experience) || empty($hourly_rate) || empty($day_from) || empty($day_to) || empty($time_from) || empty($time_to)) {
+      if (empty($name) || empty($age) || empty($gender) || empty($address) || empty($contact) || empty($specialty)) {
         header("Location: ../pages/admin/trainer/create.php?message=Please fill in all fields.&type=error");
         exit();
       }
 
-      $sql = "UPDATE trainers SET name='$name', specialty='$specialty', experience='$experience', hourly_rate='$hourly_rate', day_from='$day_from', day_to='$day_to', time_from='$time_from', time_to='$time_to'  WHERE trainer_id = $trainer_id";
+      $sql = "UPDATE trainers SET name='$name', age='$age', gender='$gender', address='$address', contact='$contact', specialty='$specialty'  WHERE trainer_id = $trainer_id";
 
       if($conn->query($sql)){
         header("Location: ../pages/admin/trainers.php?message=Trainer Created Successfully");

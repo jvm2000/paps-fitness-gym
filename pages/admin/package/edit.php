@@ -16,8 +16,6 @@ $package = mysqli_fetch_assoc($packages);
 
 $name = $package['name'];
 $description = $package['description'];
-$hourly_rate = $package['hourly_rate'];
-$daily_rate = $package['daily_rate'];
 $monthly_rate = $package['monthly_rate'];
 $weekly_rate = $package['weekly_rate'];
 $yearly_rate = $package['yearly_rate'];
@@ -51,20 +49,6 @@ $yearly_rate = $package['yearly_rate'];
           class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
           placeholder="Description"
         ><?php echo $description ?></textarea>
-
-        <input 
-          name="hourly_rate"
-          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-          placeholder="Daily Rate"
-          value="<?php echo $hourly_rate ?>"
-        />
-
-        <input 
-          name="daily_rate"
-          class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
-          placeholder="Daily Rate"
-          value="<?php echo $daily_rate ?>"
-        />
 
         <input 
           name="weekly_rate"

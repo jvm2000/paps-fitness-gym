@@ -6,8 +6,6 @@
     if(isset($_POST['create'])){
       $name = $_POST['name'];
       $description = $_POST['description'];
-      $hourly_rate = isset($_POST['hourly_rate']) && $_POST['hourly_rate'] !== '' ? $_POST['hourly_rate'] : null;
-      $daily_rate = isset($_POST['daily_rate']) && $_POST['daily_rate'] !== '' ? $_POST['daily_rate'] : null;
       $monthly_rate = isset($_POST['monthly_rate']) && $_POST['monthly_rate'] !== '' ? $_POST['monthly_rate'] : null;
       $weekly_rate = isset($_POST['weekly_rate']) && $_POST['weekly_rate'] !== '' ? $_POST['weekly_rate'] : null;
       $yearly_rate = isset($_POST['yearly_rate']) && $_POST['yearly_rate'] !== '' ? $_POST['yearly_rate'] : null;
@@ -17,9 +15,9 @@
         exit();
       }
 
-      $sql = "INSERT INTO packages (name, description, hourly_rate, daily_rate, monthly_rate, weekly_rate, yearly_rate) 
+      $sql = "INSERT INTO packages (name, description, monthly_rate, weekly_rate, yearly_rate) 
               VALUES 
-              ('$name', '$description', '$hourly_rate', '$daily_rate', '$monthly_rate', '$weekly_rate', '$yearly_rate')";
+              ('$name', '$description', '$monthly_rate', '$weekly_rate', '$yearly_rate')";
 
       if($conn->query($sql)){
         header("Location: ../pages/admin/package.php?message=Package Created Successfully");
@@ -31,14 +29,12 @@
       $package_id = $_POST['package_id'];
       $name = $_POST['name'];
       $description = $_POST['description'];
-      $hourly_rate = isset($_POST['hourly_rate']) && $_POST['hourly_rate'] !== '' ? $_POST['hourly_rate'] : null;
-      $daily_rate = isset($_POST['daily_rate']) && $_POST['daily_rate'] !== '' ? $_POST['daily_rate'] : null;
       $monthly_rate = isset($_POST['monthly_rate']) && $_POST['monthly_rate'] !== '' ? $_POST['monthly_rate'] : null;
       $weekly_rate = isset($_POST['weekly_rate']) && $_POST['weekly_rate'] !== '' ? $_POST['weekly_rate'] : null;
       $yearly_rate = isset($_POST['yearly_rate']) && $_POST['yearly_rate'] !== '' ? $_POST['yearly_rate'] : null;
 
       $sql = "UPDATE packages SET 
-              name='$name', description='$description', hourly_rate='$hourly_rate', daily_rate='$daily_rate', monthly_rate='$monthly_rate', weekly_rate='$weekly_rate', yearly_rate='$yearly_rate'  
+              name='$name', description='$description', monthly_rate='$monthly_rate', weekly_rate='$weekly_rate', yearly_rate='$yearly_rate'  
               WHERE package_id = $package_id";
 
       if($conn->query($sql)){

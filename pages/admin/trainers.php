@@ -38,10 +38,11 @@ if ($result->num_rows > 0) {
             <th class="py-4 border-b border-r border-black">Trainer ID</th>
             <th class="py-4 border-b border-r border-black">Image</th>
             <th class="py-4 border-b border-r border-black">Name</th>
+            <th class="py-4 border-b border-r border-black">Age</th>
+            <th class="py-4 border-b border-r border-black">Gender</th>
+            <th class="py-4 border-b border-r border-black">Address</th>
+            <th class="py-4 border-b border-r border-black">Contact</th>
             <th class="py-4 border-b border-r border-black">Specialty</th>
-            <th class="py-4 border-b border-r border-black">Experience</th>
-            <th class="py-4 border-b border-r border-black">Hourly Rate</th>
-            <th class="py-4 border-b border-r border-black">Availability</th>
             <th class="py-4 border-b border-black">Actions</th>
           </tr>
         </thead>
@@ -54,13 +55,11 @@ if ($result->num_rows > 0) {
                 <img src="<?php echo '../' . $trainer['image']; ?>" class="w-full h-24 object-cover">
               </td>
               <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $trainer['name'] ?></td>
+              <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $trainer['age'] ?></td>
+              <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $trainer['gender'] ?></td>
+              <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $trainer['address'] ?></td>
+              <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $trainer['contact'] ?></td>
               <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $trainer['specialty'] ?></td>
-              <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $trainer['experience'] ?></td>
-              <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $trainer['hourly_rate'] ?></td>
-              <td class="py-4 text-base text-left text-black indent-4 border-b border-black text-center">
-                <?php echo $trainer['day_from'] ?> - <?php echo $trainer['day_to'] ?> : 
-                <?php echo date('g:i A', strtotime($trainer['time_from'])) . ' - ' . date('g:i A', strtotime($trainer['time_to']));?>
-              </td>
               <td class="py-4 text-base text-center border-b border-l border-black">
                 <p>
                   <a href="trainer/edit.php?trainer_id=<?php echo $trainer['trainer_id']?>">Edit</a> 
