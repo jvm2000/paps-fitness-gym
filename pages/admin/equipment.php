@@ -39,7 +39,7 @@ if ($result->num_rows > 0) {
             <th class="py-4 border-b border-r border-black">Image</th>
             <th class="py-4 border-b border-r border-black">Name</th>
             <th class="py-4 border-b border-r border-black">Type</th>
-            <th class="py-4 border-b border-r border-black">Quantity</th>
+            <th class="py-4 border-b border-r border-black">Stocks</th>
             <th class="py-4 border-b border-r border-black">Condition</th>
             <th class="py-4 border-b border-r border-black">Last Maintenance</th>
             <th class="py-4 border-b border-r border-black">Next Maintenance Due</th>

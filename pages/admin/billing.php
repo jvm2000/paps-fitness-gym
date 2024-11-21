@@ -25,27 +25,33 @@ if ($result->num_rows > 0) {
     <table class="w-full table-auto">
       <thead>
         <tr>
-          <th class="py-4 border-b border-r border-black">Email</th>
-          <th class="py-4 border-b border-r border-black">Date</th>
-          <th class="py-4 border-b border-r border-black">Transaction</th>
-          <th class="py-4 border-b border-r border-black">Status</th>
-          <th class="py-4 border-b border-r border-black">Payment Method</th>
-          <th class="py-4 border-b border-r border-black">Total Paid</th>
-          <th class="py-4 border-b border-black">Receipt Uploaded</th>
+          <th class="py-4 border-b border-r border-black">Billing ID</th>
+          <th class="py-4 border-b border-r border-black">Member Name</th>
+          <th class="py-4 border-b border-r border-black">Type</th>
+          <th class="py-4 border-b border-r border-black">Payment Process</th>
+          <th class="py-4 border-b border-r border-black">Total Amount</th>
+          <th class="py-4 border-b border-r border-black">Billing</th>
+          <th class="py-4 border-b border-r border-black">Payment Status</th>
+          <th class="py-4 border-b border-r border-black">Next Payment Due</th>
+          <th class="py-4 border-b border-black">Actions</th>
         </tr>
       </thead>
 
       <tbody>
         <?php foreach ($billings as $billing): ?>
           <tr>
-            <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['email'] ?></td>
-            <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['date_paid'] ?></td>
-            <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['transaction_type'] ?></td>
+            <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['payment_id'] ?></td>
+            <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['name'] ?></td>
+            <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black">
+              <span class="capitalize whitespace-nowrap"><?php echo str_replace('_', ' ', str_ireplace('rate', '', $billing['transaction_type'])); ?> Membership</span>
+            </td>
             <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['method'] ?></td>
-            <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['status'] ?></td>
             <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['total_paid'] ?></td>
+            <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['date_paid'] ?></td>
+            <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['status'] ?></td>
+            <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['payment_due'] ?></td>
             <td class="text-base text-left text-black border-black">
-              <img src="<?php echo '../' . $billing['receipt_image']; ?>" class="w-full h-24 object-cover">
+
             </td>
           </tr>
         <?php endforeach; ?>

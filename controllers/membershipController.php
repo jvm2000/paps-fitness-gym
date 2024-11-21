@@ -4,7 +4,13 @@
   if($_SERVER["REQUEST_METHOD"] == "POST"){
     //Create
     if(isset($_POST['create'])){
-      $user_id = $_POST['user_id'];
+      $membership_id = $_POST['membership_id'];
+      $method = $_POST['method'];
+      $name = $_POST['name'];
+      $email = $_POST['email'];
+      $contact = $_POST['contact'];
+      $address = $_POST['address'];
+      $age = $_POST['age'];
       $type = $_POST['type'];
       $service_type = $_POST['service_type'];
       $start_date = $_POST['start_date'];
@@ -15,16 +21,17 @@
       $coach = $_POST['coach'] ?? null;
       $created_at = $_POST['created_at'];
 
-      if (empty($user_id) || empty($type) || empty($service_type) || empty($start_date) || empty($expiration_date) || empty($amount) || empty($status) || empty($payment_status)) {
-        header("Location: ../pages/user/membership.php?message=Please fill in all fields.&type=error");
-        exit();
-      }
+      $sql = "INSERT INTO memberships (membership_id, name, email, contact, address, age, type, service_type, start_date, expiration_date, amount, status, payment_status, coach, created_at) 
+              VALUES ('$membership_id' ,'$name', '$email', '$contact', '$address', '$age', '$type', '$service_type', '$start_date', '$expiration_date', '$amount', '$status', '$payment_status', '$coach', '$created_at')";
 
-      $sql = "INSERT INTO memberships (user_id, type, service_type, start_date, expiration_date, amount, status, payment_status, coach, created_at) 
-              VALUES ('$user_id', '$type', '$service_type', '$start_date', '$expiration_date', '$amount', '$status', '$payment_status', '$coach', '$created_at')";
+      $insert_sql = "INSERT INTO payments (membership_id, name, transaction_type, status, method, total_paid, date_paid, payment_due)
+                    VALUES ('$membership_id', '$name', '$type', '$payment_status', '$method', '$amount', '$created_at', '$expiration_date')";
 
-      if($conn->query($sql)){
-        header("Location: ../pages/user/membership.php?message=Membership Submitted Successfully");
+      $membershipSql = $conn->query($sql);
+      $paymentSql = $conn->query($insert_sql);
+
+      if($membershipSql && $paymentSql){
+        header("Location: ../pages/admin/membership.php?message=Membership Submitted Successfully");
       }
       echo "ERROR! Created unsuccessfully";
     }
