@@ -56,25 +56,21 @@
     }
 
     elseif(isset($_POST['update'])){
-      $trainer_id = $_POST['trainer_id'];
-      $name = $_POST['name'];
-      $specialty = $_POST['specialty'];
-      $experience = $_POST['experience'];
-      $hourly_rate = $_POST['hourly_rate'];
-      $day_from = $_POST['day_from'];
-      $day_to = $_POST['day_to'];
-      $time_from = $_POST['time_from'];
-      $time_to = $_POST['time_to'];
+      $payment_id = $_POST['payment_id'];
+      $membership_id = $_POST['membership_id'];
+      $status = $_POST['status'];
+      $memberStatus = "active";
+      $payStatus = "paid";
 
-      if (empty($name) || empty($specialty) || empty($experience) || empty($hourly_rate) || empty($day_from) || empty($day_to) || empty($time_from) || empty($time_to)) {
-        header("Location: ../pages/admin/trainer/create.php?message=Please fill in all fields.&type=error");
-        exit();
-      }
+      $sql = "UPDATE payments SET status='$status' WHERE payment_id = $payment_id";
 
-      $sql = "UPDATE trainers SET name='$name', specialty='$specialty', experience='$experience', hourly_rate='$hourly_rate', day_from='$day_from', day_to='$day_to', time_from='$time_from', time_to='$time_to'  WHERE trainer_id = $trainer_id";
+      $updateSql = "UPDATE memberships SET status='$memberStatus', payment_status='$payStatus' WHERE membership_id = $membership_id";
 
-      if($conn->query($sql)){
-        header("Location: ../pages/admin/trainers.php?message=Trainer Created Successfully");
+      $payment = $conn->query($sql);
+      $paymentSql = $conn->query($updateSql);
+
+      if($payment && $paymentSql){
+        header("Location: ../pages/admin/billing.php?message=Trainer Created Successfully");
       } else {
         echo "ERROR! Created unsuccessfully";
       }
@@ -82,10 +78,16 @@
 
     elseif(isset($_POST['delete'])){
       $payment_id = $_POST['payment_id'];
+      $membership_id = $_POST['membership_id'];
 
       $sql = "DELETE FROM payments WHERE payment_id=$payment_id";
+
+      $deleteSql = "DELETE FROM memberships WHERE membership_id=$membership_id";
+
+      $membershipSql = $conn->query($sql);
+      $del = $conn->query($deleteSql);
   
-      if($conn->query($sql)){
+      if($membershipSql && $del){
         header("Location: ../pages/admin/billing.php?message=Trainers Deleted Successfully");
       } else {
         echo "ERROR! Created unsuccessfully";

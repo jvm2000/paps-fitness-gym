@@ -57,6 +57,8 @@ if ($result->num_rows > 0) {
 
                 <form action='../../controllers/paymentController.php' method='POST'>
                   <input type="hidden" name="payment_id" value="<?php echo $billing['payment_id']?>">
+                  <input type="hidden" name="membership_id" value="<?php echo $billing['membership_id']?>">
+                  
                   <button type="submit" name="delete">Delete</button> 
                 </form>
               </p>

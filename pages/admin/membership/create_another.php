@@ -1,8 +1,8 @@
 <?php
 include "../../../config/connect.php";
 
-$title = "About Membership";
-$pageHeader = "About Membership";
+$title = "Create Another Membership";
+$pageHeader = "Create Another Membership";
 $childView = __DIR__ . '/create_another.php';
 $noHeader = true;
 
