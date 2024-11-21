@@ -1,14 +1,30 @@
 <?php
 include "../../../config/connect.php";
 
-$title = "Membership Create";
-$pageHeader = "Membership Create";
-$childView = __DIR__ . '/create.php';
+$title = "About Membership";
+$pageHeader = "About Membership";
+$childView = __DIR__ . '/create_another.php';
 $noHeader = true;
 
 include('../../../layouts/admin.php');
 
-$sql = "SELECT * FROM packages";
+$membership_id = $_GET['membership_id'];
+
+$sql = "SELECT * FROM memberships WHERE membership_id = $membership_id";
+$memberships = mysqli_query($conn,$sql);
+$membership = mysqli_fetch_assoc($memberships);
+
+$membership_id = $membership['membership_id'];
+$name = $membership['name'];
+$email = $membership['email'];
+$contact = $membership['contact'];
+$address = $membership['address'];
+$age = $membership['age'];
+$type = $membership['type'];
+$service_type = $membership['service_type'];
+$payment_status = $membership['payment_status'];
+
+$sql = "SELECT * FROM packages WHERE NOT name = '$service_type'";
 
 $result = mysqli_query($conn, $sql);
 
@@ -20,17 +36,11 @@ if ($result->num_rows > 0) {
   }
 }
 
-$membershipCount = 0;
-$sql = "SELECT COUNT(*) AS total FROM memberships";
-
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-  $row = $result->fetch_assoc();
-  $membershipCount = $row['total'];
-}
-
-$memberID = $membershipCount + 1;
+$options = [
+  'weekly_rate' => 'Weekly',
+  'monthly_rate' => 'Monthly',
+  'yearly_rate' => 'Yearly'
+];
 ?>
 
 <div class="px-52 w-full flex flex-col items-center pb-16">
@@ -50,7 +60,7 @@ $memberID = $membershipCount + 1;
       <input 
         name="membership_id"
         class="w-full focus:ring-0 focus:outline-none border-b border-black text-xl text-black bg-[#fabf3b] text-black placeholder-gray-600"
-        value="<?php echo $memberID ?>"
+        value="<?php echo $membership_id + 1 ?>"
       />
     </div>
 
@@ -59,6 +69,7 @@ $memberID = $membershipCount + 1;
         name="name"
         class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
         placeholder="Full Name"
+        value="<?php echo $name ?>"
       />
 
       <input 
@@ -66,24 +77,28 @@ $memberID = $membershipCount + 1;
         name="email"
         class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
         placeholder="Email"
+        value="<?php echo $email ?>"
       />
 
       <input 
         name="contact"
         class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
         placeholder="Contact"
+        value="<?php echo $contact ?>"
       />
 
       <input 
         name="address"
         class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
         placeholder="Address"
+        value="<?php echo $address ?>"
       />
 
       <input 
         name="age"
         class="w-full px-4 py-2.5 ring-[1px] ring-black text-base rounded-md text-black bg-black text-white"
         placeholder="Age"
+        value="<?php echo $age ?>"
       />
 
       <div class="space-y-1.5 w-full">
@@ -110,9 +125,11 @@ $memberID = $membershipCount + 1;
           id="membershipTypeSelect"
         >
           <option value="0" selected>Select Membership Type</option>
-          <option value="weekly_rate">Weekly</option>
-          <option value="monthly_rate">Monthly</option>
-          <option value="yearly_rate">Yearly</option>
+          <?php foreach ($options as $value => $label): ?>
+            <?php if ($value !== $type): ?>
+              <option value="<?= htmlspecialchars($value) ?>"><?= htmlspecialchars($label) ?></option>
+            <?php endif; ?>
+          <?php endforeach; ?>
         </select>
       </div>
 

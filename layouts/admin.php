@@ -38,7 +38,7 @@ $noHeader = isset($noHeader) ? $noHeader : false;
 
     <?php if(!$noHeader): ?>
       <div class="px-52 w-full">
-        <div class="grid grid-cols-7 gap-x-10">
+        <div class="grid grid-cols-6 gap-x-10">
           <button 
             class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
             onclick="window.location.href='home.php'"
@@ -72,13 +72,6 @@ $noHeader = isset($noHeader) ? $noHeader : false;
             onclick="window.location.href='trainers.php'"
           >
             Manage Trainers
-          </button>
-
-          <button 
-            class="bg-[#fabf3b] px-5 py-2 text-black text-sm font-medium rounded-sm w-full"
-            onclick="window.location.href='schedules.php'"
-          >
-            Manage Schedules
           </button>
 
           <button 

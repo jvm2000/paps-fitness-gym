@@ -50,8 +50,16 @@ if ($result->num_rows > 0) {
             <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['date_paid'] ?></td>
             <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['status'] ?></td>
             <td class="py-4 text-base text-left text-black indent-4 border-b border-r border-black"><?php echo $billing['payment_due'] ?></td>
-            <td class="text-base text-left text-black border-black">
+            <td class="text-base text-left text-black border-b border-black">
+              <p>
+                <a href="billing/edit.php?payment_id=<?php echo $billing['payment_id']?>">Edit</a> 
+                <span>-</span>
 
+                <form action='../../controllers/paymentController.php' method='POST'>
+                  <input type="hidden" name="payment_id" value="<?php echo $billing['payment_id']?>">
+                  <button type="submit" name="delete">Delete</button> 
+                </form>
+              </p>
             </td>
           </tr>
         <?php endforeach; ?>
